@@ -10,10 +10,6 @@ class DietApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Diet Food App',
-      theme: ThemeData(
-        primarySwatch: Colors.green,
-      ),
       home: MenuPage(),
     );
   }
@@ -29,7 +25,7 @@ class FoodItem {
 
 class MenuPage extends StatefulWidget {
   @override
-  _MenuPageState createState() => _MenuPageState();
+  State<MenuPage> createState() => _MenuPageState();
 }
 
 class _MenuPageState extends State<MenuPage> {
@@ -58,94 +54,103 @@ class _MenuPageState extends State<MenuPage> {
   }
 
   Future<void> sendWhatsAppOrder() async {
-    String phone = "966563683212"; // رقمك بالسعودية
-    String orderText = "Hello, I want to order:\n\n";
+    String phone = "966563683212";
 
+    String orderText = "Order Details:\n\n";
     for (var item in cart) {
       orderText += "- ${item.name} (${item.price} SAR)\n";
     }
-
     orderText += "\nTotal: $totalPrice SAR";
 
-    String url =
+    final url =
         "https://wa.me/$phone?text=${Uri.encodeComponent(orderText)}";
 
-    if (await canLaunchUrl(Uri.parse(url))) {
-      await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
-    }
+    await launchUrl(Uri.parse(url),
+        mode: LaunchMode.externalApplication);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Diet Menu"),
-        actions: [
-          Padding(
-            padding: EdgeInsets.all(10),
-            child: Center(child: Text("🛒 ${cart.length}")),
-          )
-        ],
+        title: Text("Diet Restaurant"),
+        backgroundColor: Colors.green,
       ),
-      body: Column(
+
+      body: ListView(
         children: [
-          Expanded(
-            child: ListView.builder(
-              itemCount: menu.length,
-              itemBuilder: (context, index) {
-                final item = menu[index];
-                return Card(
-                  margin: EdgeInsets.all(10),
-                  child: ListTile(
-                    title: Text(item.name),
-                    subtitle: Text(
-                        "${item.calories} kcal - ${item.price} SAR"),
-                    trailing: ElevatedButton(
-                      child: Text("Add"),
-                      onPressed: () => addToCart(item),
-                    ),
-                  ),
-                );
-              },
+          /// MENU SECTION
+          Padding(
+            padding: const EdgeInsets.all(10),
+            child: Text(
+              "Menu",
+              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
             ),
           ),
 
+          ...menu.map((item) {
+            return Card(
+              margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              child: ListTile(
+                title: Text(item.name),
+                subtitle: Text("${item.calories} kcal - ${item.price} SAR"),
+                trailing: ElevatedButton(
+                  onPressed: () => addToCart(item),
+                  child: Text("Add"),
+                ),
+              ),
+            );
+          }).toList(),
+
           Divider(),
 
-          Expanded(
-            child: Column(
-              children: [
-                Text(
-                  "Cart",
-                  style: TextStyle(
-                      fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: cart.length,
-                    itemBuilder: (context, index) {
-                      final item = cart[index];
-                      return ListTile(
-                        title: Text(item.name),
-                        trailing: IconButton(
-                          icon: Icon(Icons.delete),
-                          onPressed: () => removeFromCart(index),
-                        ),
-                      );
-                    },
-                  ),
-                ),
-                Text(
-                  "Total: $totalPrice SAR",
-                  style: TextStyle(fontSize: 18),
-                ),
-                SizedBox(height: 10),
-                ElevatedButton(
-                  onPressed: cart.isEmpty ? null : sendWhatsAppOrder,
-                  child: Text("Order via WhatsApp"),
-                ),
-                SizedBox(height: 10),
-              ],
+          /// CART SECTION
+          Padding(
+            padding: const EdgeInsets.all(10),
+            child: Text(
+              "Cart",
+              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+            ),
+          ),
+
+          if (cart.isEmpty)
+            Padding(
+              padding: EdgeInsets.all(10),
+              child: Text("Cart is empty"),
+            ),
+
+          ...cart.asMap().entries.map((entry) {
+            int index = entry.key;
+            FoodItem item = entry.value;
+
+            return ListTile(
+              title: Text(item.name),
+              trailing: IconButton(
+                icon: Icon(Icons.delete, color: Colors.red),
+                onPressed: () => removeFromCart(index),
+              ),
+            );
+          }).toList(),
+
+          SizedBox(height: 10),
+
+          Padding(
+            padding: const EdgeInsets.all(10),
+            child: Text(
+              "Total: $totalPrice SAR",
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+          ),
+
+          Padding(
+            padding: const EdgeInsets.all(10),
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.green,
+                minimumSize: Size(double.infinity, 50),
+              ),
+              onPressed: cart.isEmpty ? null : sendWhatsAppOrder,
+              child: Text("Order via WhatsApp"),
             ),
           ),
         ],
