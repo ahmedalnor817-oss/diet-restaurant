@@ -1,148 +1,166 @@
-const WHATSAPP = "966563683212";
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>متجر النخبة للمكملات الغذائية | القطيف</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #f8f9fa;
+        }
+        .navbar {
+            background-color: #1a1a1a;
+        }
+        .hero-section {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&q=80');
+            background-size: cover;
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+        }
+        .card-product {
+            transition: transform 0.3s;
+            border: none;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .card-product:hover {
+            transform: translateY(-10px);
+        }
+        .btn-custom {
+            background-color: #e63946;
+            color: white;
+            border-radius: 25px;
+        }
+        .whatsapp-float {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #25d366;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            z-index: 1000;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+    </style>
+</head>
+<body>
 
-// قاعدة بيانات النخبة مع روابط صور موثوقة وعالية الجودة
-const fullMenu = {
-    "باقات النخبة 💎": [
-        { id: 101, name: "باقة إيليت الأسبوعية", price: 550, cal: "6 أيام", img: "https://images.unsplash.com/photo-1547592166-23ac45744acd?auto=format&fit=crop&w=800&q=80", desc: "6 وجبات غداء متكاملة مع سناك صحي يومي وتوصيل مجاني" },
-        { id: 102, name: "باقة بناء العضلات PRO", price: 1800, cal: "شهر كامل", img: "https://images.unsplash.com/photo-1543362906-acfc16c67564?auto=format&fit=crop&w=800&q=80", desc: "وجبتين يومياً غنية بالبروتين مصممة للرياضيين" }
-    ],
-    "رئيسي 🔥": [
-        { id: 1, name: "سلمون بصلصة الترياكي", price: 72, cal: 420, img: "https://images.unsplash.com/photo-1467003909585-2f8a72700288?auto=format&fit=crop&w=800&q=80", desc: "سلمون نرويجي مشوي مع أرز الياسمين وخضار" },
-        { id: 2, name: "ستيك لحم بقر واغيو", price: 98, cal: 540, img: "https://images.unsplash.com/photo-1600891964599-f61ba0e24092?auto=format&fit=crop&w=800&q=80", desc: "شرائح لحم فاخرة مع بطاطس مهروسة صوص مشروم" },
-        { id: 3, name: "دجاج بيري بيري", price: 54, cal: 380, img: "https://images.unsplash.com/photo-1532550907401-a500c9a57435?auto=format&fit=crop&w=800&q=80", desc: "صدر دجاج متبل بخلطة بيري بيري الحارة" }
-    ],
-    "سناكات 🥗": [
-        { id: 4, name: "سلطة الكينوا الملكية", price: 42, cal: 210, img: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=800&q=80", desc: "كينوا عضوية مع أفوكادو وجوز" },
-        { id: 5, name: "كرات الطاقة بالبروتين", price: 28, cal: 160, img: "https://images.unsplash.com/photo-1539136788836-5699e7863572?auto=format&fit=crop&w=800&q=80", desc: "كرات الشوفان والعسل وبروتين ايزوليت" }
-    ],
-    "مشروبات 🥤": [
-        { id: 6, name: "ديتوكس التفاح والأخضر", price: 25, cal: 90, img: "https://images.unsplash.com/photo-1610970882799-64a0de9325ed?auto=format&fit=crop&w=800&q=80", desc: "مزيج منعش من التفاح والسبانخ والليمون" },
-        { id: 7, name: "سموذي بروتين بيري", price: 34, cal: 240, img: "https://images.unsplash.com/photo-1553531384-cc64ac80f931?auto=format&fit=crop&w=800&q=80", desc: "توت مشكل مع سكوب بروتين واي" }
-    ]
-};
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#">نخبة المكملات - القطيف</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#home">الرئيسية</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#protein">بروتينات</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#amino">أحماض أمينية</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#vitamins">فيتامينات</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
-let cart = {};
-let currentCategory = Object.keys(fullMenu)[0];
+    <header class="hero-section" id="home">
+        <div class="container">
+            <h1 class="display-3 fw-bold">أقوى المكملات في القطيف</h1>
+            <p class="lead">نوفر لك أجود أنواع البروتينات والأحماض الأمينية لبناء جسم مثالي.</p>
+            <a href="https://wa.me/رقم_جوالك_هنا" class="btn btn-custom btn-lg mt-3">اطلب الآن عبر الواتساب</a>
+        </div>
+    </header>
 
-// دالة التشغيل الآمنة
-function init() {
-    renderUI();
-}
-
-function renderUI() {
-    const root = document.getElementById('meals-list');
-    if (!root) return;
-
-    root.innerHTML = `
-    <div style="background:#000; color:#fff; font-family:'Inter', sans-serif; min-height:100vh; direction:rtl; padding-bottom:150px;">
+    <div class="container py-5">
         
-        <header style="padding:40px 20px 20px; position:sticky; top:0; background:rgba(0,0,0,0.85); backdrop-filter:blur(30px); z-index:1000; border-bottom:1px solid rgba(255,255,255,0.05);">
-            <div style="display:flex; justify-content:space-between; align-items:center;">
-                <h1 style="font-size:26px; font-weight:900; margin:0; letter-spacing:-1px;">FITFUEL <span style="color:#f1c40f">ELITE</span></h1>
-                <div style="background:#f1c40f; color:#000; font-size:10px; font-weight:900; padding:4px 10px; border-radius:10px;">PREMIUM</div>
+        <h2 class="text-center mb-5" id="protein">أقسام البروتينات</h2>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card card-product h-100 p-3 text-center">
+                    <img src="https://images.unsplash.com/photo-1593095191850-2a7330053bb4?auto=format&fit=crop&q=80&w=200" class="card-img-top mx-auto" style="width: 150px;" alt="Whey Protein">
+                    <div class="card-body">
+                        <h5 class="card-title">واي بروتين ايزوليت</h5>
+                        <p class="card-text">امتصاص سريع، مثالي لبعد التمرين مباشرة.</p>
+                        <p class="fw-bold text-danger">السعر: 250 ريال</p>
+                    </div>
+                </div>
             </div>
-            
-            <div id="tabs" style="display:flex; gap:12px; margin-top:25px; overflow-x:auto; padding-bottom:10px; scrollbar-width:none;">
-                ${Object.keys(fullMenu).map(cat => `
-                    <button class="t-btn ${currentCategory === cat ? 'active' : ''}" 
-                            onclick="switchCategory('${cat}')"
-                            style="background:${currentCategory === cat ? '#f1c40f' : '#111'}; 
-                                   color:${currentCategory === cat ? '#000' : '#888'}; 
-                                   border:none; padding:12px 24px; border-radius:18px; 
-                                   font-weight:bold; white-space:nowrap; cursor:pointer; 
-                                   transition:0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);">
-                        ${cat}
-                    </button>
-                `).join('')}
+            <div class="col-md-4">
+                <div class="card card-product h-100 p-3 text-center">
+                    <img src="https://images.unsplash.com/photo-1579722820308-d74e5719d23e?auto=format&fit=crop&q=80&w=200" class="card-img-top mx-auto" style="width: 150px;" alt="Mass Gainer">
+                    <div class="card-body">
+                        <h5 class="card-title">ماس جينر (ضخامة)</h5>
+                        <p class="card-text">سعرات حرارية عالية لزيادة الوزن والكتلة العضلية.</p>
+                        <p class="fw-bold text-danger">السعر: 210 ريال</p>
+                    </div>
+                </div>
             </div>
-        </header>
+            <div class="col-md-4">
+                <div class="card card-product h-100 p-3 text-center">
+                    <img src="https://via.placeholder.com/150?text=Casein" class="card-img-top mx-auto" style="width: 150px;" alt="Casein">
+                    <div class="card-body">
+                        <h5 class="card-title">كازين بروتين</h5>
+                        <p class="card-text">امتصاص بطيء، مثالي قبل النوم لتغذية العضلات.</p>
+                        <p class="fw-bold text-danger">السعر: 230 ريال</p>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-        <main id="main-grid" style="padding:20px; display:grid; grid-template-columns:1fr; gap:30px; animation: fadeIn 0.5s ease;">
-            ${renderItems()}
-        </main>
+        <hr class="my-5">
 
-        <div id="cart-dock" style="position:fixed; bottom:30px; left:50%; transform:translateX(-50%) ${Object.keys(cart).length > 0 ? 'translateY(0)' : 'translateY(150px)'}; 
-             width:90%; max-width:450px; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); 
-             backdrop-filter:blur(25px); border-radius:30px; padding:20px; display:flex; justify-content:space-between; 
-             align-items:center; z-index:2000; transition:0.6s cubic-bezier(0.19, 1, 0.22, 1); box-shadow:0 20px 40px rgba(0,0,0,0.5);">
-            
-            <div>
-                <span style="display:block; font-size:24px; font-weight:900; color:#f1c40f;">${getTotalPrice()} ريال</span>
-                <span style="font-size:12px; color:rgba(255,255,255,0.6);">${getTotalCount()} أصناف مختارة</span>
+        <h2 class="text-center mb-5" id="amino">الأحماض الأمينية وBCAA</h2>
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-3">
+                <div class="card card-product text-center p-3">
+                    <h6>BCAA 2:1:1</h6>
+                    <p class="small text-muted">للاستشفاء العضلي</p>
+                    <button class="btn btn-sm btn-outline-dark">تفاصيل</button>
+                </div>
             </div>
-            
-            <button onclick="checkout()" style="background:#f1c40f; color:#000; border:none; padding:15px 35px; border-radius:18px; font-weight:900; font-size:16px; cursor:pointer;">إتمام الطلب</button>
+            <div class="col-md-6 col-lg-3">
+                <div class="card card-product text-center p-3">
+                    <h6>Glutamine</h6>
+                    <p class="small text-muted">دعم المناعة والعضلات</p>
+                    <button class="btn btn-sm btn-outline-dark">تفاصيل</button>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="card card-product text-center p-3">
+                    <h6>Creatine Monohydrate</h6>
+                    <p class="small text-muted">لزيادة القوة والتحمل</p>
+                    <button class="btn btn-sm btn-outline-dark">تفاصيل</button>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="card card-product text-center p-3">
+                    <h6>Pre-Workout</h6>
+                    <p class="small text-muted">طاقة قصوى للتمرين</p>
+                    <button class="btn btn-sm btn-outline-dark">تفاصيل</button>
+                </div>
+            </div>
         </div>
     </div>
 
-    <style>
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .t-btn:active { transform: scale(0.9); }
-        .add-btn:active { transform: scale(0.85) rotate(90deg); }
-    </style>
-    `;
-}
-
-function renderItems() {
-    return fullMenu[currentCategory].map(item => `
-        <div style="background:#0a0a0a; border-radius:35px; overflow:hidden; border:1px solid rgba(255,255,255,0.05); position:relative;">
-            <div style="height:350px; position:relative;">
-                <img src="${item.img}" style="width:100%; height:100%; object-fit:cover;" 
-                     onerror="this.src='https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800'">
-                
-                <div style="position:absolute; inset:0; background:linear-gradient(transparent 40%, rgba(0,0,0,0.9) 90%);"></div>
-                
-                <div style="position:absolute; top:20px; right:20px; background:rgba(0,0,0,0.6); backdrop-filter:blur(10px); color:#f1c40f; padding:6px 15px; border-radius:12px; font-weight:900; font-size:18px; border:1px solid rgba(241,196,15,0.3);">
-                    ${item.price} ريال
-                </div>
-
-                <button class="add-btn" onclick="addToCart(${item.id}, '${item.name}', ${item.price})" 
-                        style="position:absolute; top:20px; left:20px; background:#fff; color:#000; border:none; 
-                               width:50px; height:50px; border-radius:50%; font-size:30px; font-weight:bold; 
-                               cursor:pointer; transition:0.3s; box-shadow:0 10px 20px rgba(0,0,0,0.5);">
-                    +
-                </button>
-
-                <div style="position:absolute; bottom:25px; right:25px; left:25px;">
-                    <h2 style="margin:0; font-size:24px; font-weight:800; color:#fff;">${item.name}</h2>
-                    <p style="margin:5px 0 0; color:rgba(255,255,255,0.5); font-size:14px; line-height:1.4;">${item.desc}</p>
-                    <div style="margin-top:10px; font-size:12px; color:#f1c40f; font-weight:bold;">⚡ ${item.cal} CAL</div>
-                </div>
+    <footer class="bg-dark text-white py-4 mt-5 text-center">
+        <div class="container">
+            <h4>تواصل معنا - فرع القطيف</h4>
+            <p>الموقع: حي الشاطئ / حي الناصرة، القطيف، المنطقة الشرقية</p>
+            <p>جوال: <span dir="ltr">05XXXXXXXX</span></p>
+            <div class="mt-3">
+                <p>&copy; 2026 جميع الحقوق محفوظة لمتجر مكملات القطيف</p>
             </div>
         </div>
-    `).join('');
-}
+    </footer>
 
-function switchCategory(cat) {
-    currentCategory = cat;
-    renderUI();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-}
+    <a href="https://wa.me/9665XXXXXXXX" class="whatsapp-float" target="_blank">
+        تحدث معنا واتساب 💬
+    </a>
 
-function addToCart(id, name, price) {
-    if (!cart[id]) cart[id] = { name, price, qty: 0 };
-    cart[id].qty++;
-    renderUI(); // تحديث فوري للواجهة والسلة
-}
-
-function getTotalPrice() {
-    return Object.values(cart).reduce((total, item) => total + (item.price * item.qty), 0);
-}
-
-function getTotalCount() {
-    return Object.values(cart).reduce((total, item) => total + item.qty, 0);
-}
-
-function checkout() {
-    let message = "طلب جديد من FITFUEL ELITE 🥗\n\n";
-    Object.values(cart).forEach(item => {
-        message += `• ${item.name} (العدد: ${item.qty}) = ${item.price * item.qty} ريال\n`;
-    });
-    message += `\n💰 الإجمالي: ${getTotalPrice()} ريال`;
-    
-    const url = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(message)}`;
-    window.open(url, '_blank');
-}
-
-// البدء عند تحميل الصفحة
-document.addEventListener('DOMContentLoaded', init);
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
