@@ -3,164 +3,94 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>متجر النخبة للمكملات الغذائية | القطيف</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+    <title>متجر مكملات القطيف الاحترافي</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: 'Cairo', sans-serif;
-            background-color: #f8f9fa;
+        * { box-sizing: border-box; font-family: 'Cairo', sans-serif; }
+        body { margin: 0; background-color: #121212; color: #fff; text-align: center; }
+        
+        header { background: #ce1212; padding: 50px 20px; border-bottom: 5px solid #fff; }
+        .hero-h1 { margin: 0; font-size: 2.5rem; }
+        
+        .container { padding: 20px; max-width: 1200px; margin: auto; }
+        
+        .section-title { color: #ce1212; margin-top: 40px; font-size: 1.8rem; border-bottom: 2px solid #333; display: inline-block; padding-bottom: 10px; }
+        
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 20px; }
+        
+        .card { background: #1e1e1e; padding: 20px; border-radius: 15px; border: 1px solid #333; transition: 0.3s; }
+        .card:hover { transform: scale(1.05); border-color: #ce1212; }
+        .card h3 { color: #ce1212; margin-bottom: 10px; }
+        .card p { font-size: 0.9rem; color: #ccc; }
+        .price { font-weight: bold; color: #fff; font-size: 1.2rem; display: block; margin-top: 10px; }
+
+        .contact-btn { 
+            display: inline-block; background: #25d366; color: white; 
+            padding: 15px 30px; border-radius: 50px; text-decoration: none; 
+            font-weight: bold; margin-top: 30px; font-size: 1.2rem;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
         }
-        .navbar {
-            background-color: #1a1a1a;
-        }
-        .hero-section {
-            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&q=80');
-            background-size: cover;
-            color: white;
-            padding: 100px 0;
-            text-align: center;
-        }
-        .card-product {
-            transition: transform 0.3s;
-            border: none;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-        .card-product:hover {
-            transform: translateY(-10px);
-        }
-        .btn-custom {
-            background-color: #e63946;
-            color: white;
-            border-radius: 25px;
-        }
-        .whatsapp-float {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: #25d366;
-            color: white;
-            padding: 15px 25px;
-            border-radius: 50px;
-            text-decoration: none;
-            z-index: 1000;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-        }
+
+        footer { background: #000; padding: 30px; margin-top: 50px; font-size: 0.8rem; color: #777; }
+        .qatif-tag { color: #ce1212; font-weight: bold; }
     </style>
 </head>
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
-        <div class="container">
-            <a class="navbar-brand fw-bold" href="#">نخبة المكملات - القطيف</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="#home">الرئيسية</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#protein">بروتينات</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#amino">أحماض أمينية</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#vitamins">فيتامينات</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-    <header class="hero-section" id="home">
-        <div class="container">
-            <h1 class="display-3 fw-bold">أقوى المكملات في القطيف</h1>
-            <p class="lead">نوفر لك أجود أنواع البروتينات والأحماض الأمينية لبناء جسم مثالي.</p>
-            <a href="https://wa.me/رقم_جوالك_هنا" class="btn btn-custom btn-lg mt-3">اطلب الآن عبر الواتساب</a>
-        </div>
+    <header>
+        <h1 class="hero-h1">نخبة المكملات الغذائية بالقطيف</h1>
+        <p>جودة عالمية.. توصيل سريع لكل أحياء القطيف</p>
     </header>
 
-    <div class="container py-5">
+    <div class="container">
         
-        <h2 class="text-center mb-5" id="protein">أقسام البروتينات</h2>
-        <div class="row g-4">
-            <div class="col-md-4">
-                <div class="card card-product h-100 p-3 text-center">
-                    <img src="https://images.unsplash.com/photo-1593095191850-2a7330053bb4?auto=format&fit=crop&q=80&w=200" class="card-img-top mx-auto" style="width: 150px;" alt="Whey Protein">
-                    <div class="card-body">
-                        <h5 class="card-title">واي بروتين ايزوليت</h5>
-                        <p class="card-text">امتصاص سريع، مثالي لبعد التمرين مباشرة.</p>
-                        <p class="fw-bold text-danger">السعر: 250 ريال</p>
-                    </div>
-                </div>
+        <h2 class="section-title">قسم البروتينات (Protein)</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>Whey Protein Isolate</h3>
+                <p>صافي، سريع الامتصاص، لبناء عضلي بدون دهون.</p>
+                <span class="price">280 ريال</span>
             </div>
-            <div class="col-md-4">
-                <div class="card card-product h-100 p-3 text-center">
-                    <img src="https://images.unsplash.com/photo-1579722820308-d74e5719d23e?auto=format&fit=crop&q=80&w=200" class="card-img-top mx-auto" style="width: 150px;" alt="Mass Gainer">
-                    <div class="card-body">
-                        <h5 class="card-title">ماس جينر (ضخامة)</h5>
-                        <p class="card-text">سعرات حرارية عالية لزيادة الوزن والكتلة العضلية.</p>
-                        <p class="fw-bold text-danger">السعر: 210 ريال</p>
-                    </div>
-                </div>
+            <div class="card">
+                <h3>Mass Gainer</h3>
+                <p>مخصص للضخامة وزيادة الوزن للأجسام النحيفة.</p>
+                <span class="price">240 ريال</span>
             </div>
-            <div class="col-md-4">
-                <div class="card card-product h-100 p-3 text-center">
-                    <img src="https://via.placeholder.com/150?text=Casein" class="card-img-top mx-auto" style="width: 150px;" alt="Casein">
-                    <div class="card-body">
-                        <h5 class="card-title">كازين بروتين</h5>
-                        <p class="card-text">امتصاص بطيء، مثالي قبل النوم لتغذية العضلات.</p>
-                        <p class="fw-bold text-danger">السعر: 230 ريال</p>
-                    </div>
-                </div>
+            <div class="card">
+                <h3>Casein Protein</h3>
+                <p>بروتين بطيء الامتصاص للاستخدام قبل النوم.</p>
+                <span class="price">260 ريال</span>
             </div>
         </div>
 
-        <hr class="my-5">
-
-        <h2 class="text-center mb-5" id="amino">الأحماض الأمينية وBCAA</h2>
-        <div class="row g-4">
-            <div class="col-md-6 col-lg-3">
-                <div class="card card-product text-center p-3">
-                    <h6>BCAA 2:1:1</h6>
-                    <p class="small text-muted">للاستشفاء العضلي</p>
-                    <button class="btn btn-sm btn-outline-dark">تفاصيل</button>
-                </div>
+        <h2 class="section-title">الأحماض الأمينية والطاقة</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>BCAA 2:1:1</h3>
+                <p>للاستشفاء العضلي ومنع الهدم أثناء التمرين.</p>
+                <span class="price">150 ريال</span>
             </div>
-            <div class="col-md-6 col-lg-3">
-                <div class="card card-product text-center p-3">
-                    <h6>Glutamine</h6>
-                    <p class="small text-muted">دعم المناعة والعضلات</p>
-                    <button class="btn btn-sm btn-outline-dark">تفاصيل</button>
-                </div>
+            <div class="card">
+                <h3>Creatine Monohydrate</h3>
+                <p>الأفضل لزيادة القوة البدنية وتضخيم الخلية.</p>
+                <span class="price">120 ريال</span>
             </div>
-            <div class="col-md-6 col-lg-3">
-                <div class="card card-product text-center p-3">
-                    <h6>Creatine Monohydrate</h6>
-                    <p class="small text-muted">لزيادة القوة والتحمل</p>
-                    <button class="btn btn-sm btn-outline-dark">تفاصيل</button>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-3">
-                <div class="card card-product text-center p-3">
-                    <h6>Pre-Workout</h6>
-                    <p class="small text-muted">طاقة قصوى للتمرين</p>
-                    <button class="btn btn-sm btn-outline-dark">تفاصيل</button>
-                </div>
+            <div class="card">
+                <h3>EAA Essential</h3>
+                <p>مجموعة الأحماض الكاملة لترميم الألياف العضلية.</p>
+                <span class="price">180 ريال</span>
             </div>
         </div>
+
+        <a href="https://wa.me/9665XXXXXXXX" class="contact-btn">طلب عبر واتساب (القطيف) 💬</a>
+
     </div>
 
-    <footer class="bg-dark text-white py-4 mt-5 text-center">
-        <div class="container">
-            <h4>تواصل معنا - فرع القطيف</h4>
-            <p>الموقع: حي الشاطئ / حي الناصرة، القطيف، المنطقة الشرقية</p>
-            <p>جوال: <span dir="ltr">05XXXXXXXX</span></p>
-            <div class="mt-3">
-                <p>&copy; 2026 جميع الحقوق محفوظة لمتجر مكملات القطيف</p>
-            </div>
-        </div>
+    <footer>
+        <p>جميع المكملات أصلية ومضمونة 100%</p>
+        <p>خدمة التوصيل متوفرة في: <span class="qatif-tag">القطيف، سيهات، صفوى، جزيرة تاروت</span></p>
+        <p>حقوق النشر © 2026 - مكملات القطيف</p>
     </footer>
 
-    <a href="https://wa.me/9665XXXXXXXX" class="whatsapp-float" target="_blank">
-        تحدث معنا واتساب 💬
-    </a>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
