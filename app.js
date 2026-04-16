@@ -1,160 +1,75 @@
-import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
+// 1. إعدادات التواصل (ضع رقمك هنا ليبدأ بـ 966)
+const WHATSAPP_NUMBER = "9665XXXXXXXX"; 
 
-void main() {
-  runApp(DietApp());
-}
-
-class DietApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: MenuPage(),
-    );
-  }
-}
-
-class FoodItem {
-  final String name;
-  final double price;
-  final int calories;
-
-  FoodItem({required this.name, required this.price, required this.calories});
-}
-
-class MenuPage extends StatefulWidget {
-  @override
-  State<MenuPage> createState() => _MenuPageState();
-}
-
-class _MenuPageState extends State<MenuPage> {
-  List<FoodItem> menu = [
-    FoodItem(name: "Chicken Rice Diet", price: 30, calories: 450),
-    FoodItem(name: "Tuna Salad", price: 25, calories: 300),
-    FoodItem(name: "Beef Diet Meal", price: 35, calories: 500),
-    FoodItem(name: "Egg Protein Meal", price: 20, calories: 250),
-  ];
-
-  List<FoodItem> cart = [];
-
-  double get totalPrice =>
-      cart.fold(0, (sum, item) => sum + item.price);
-
-  void addToCart(FoodItem item) {
-    setState(() {
-      cart.add(item);
-    });
-  }
-
-  void removeFromCart(int index) {
-    setState(() {
-      cart.removeAt(index);
-    });
-  }
-
-  Future<void> sendWhatsAppOrder() async {
-    String phone = "966563683212";
-
-    String orderText = "Order Details:\n\n";
-    for (var item in cart) {
-      orderText += "- ${item.name} (${item.price} SAR)\n";
+// 2. قاعدة بيانات الوجبات (MVP Data)
+const mealsData = [
+    {
+        id: 1,
+        name: "سلمون مشوي بالليمون",
+        price: 65,
+        calories: 420,
+        description: "قطعة سلمون طازجة مع خضار سوتيه وأرز بني",
+        image: "https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=600"
+    },
+    {
+        id: 2,
+        name: "دجاج مشوي دايت",
+        price: 45,
+        calories: 350,
+        description: "صدر دجاج متبل بالأعشاب مع سلطة جرجير",
+        image: "https://images.unsplash.com/photo-1532550907401-a500c9a57435?w=600"
+    },
+    {
+        id: 3,
+        name: "فتة باذنجان صحية",
+        price: 35,
+        calories: 280,
+        description: "باذنجان مشوي مع زبادي لايت وخبز بر محمص",
+        image: "https://images.unsplash.com/photo-1541518763669-27fef04b14ea?w=600"
+    },
+    {
+        id: 4,
+        name: "ستيك لحم بقر لايت",
+        price: 70,
+        calories: 490,
+        description: "شريحة لحم بقر قليلة الدهون مع بطاطس مهروسة",
+        image: "https://images.unsplash.com/photo-1600891964599-f61ba0e24092?w=600"
     }
-    orderText += "\nTotal: $totalPrice SAR";
+];
 
-    final url =
-        "https://wa.me/$phone?text=${Uri.encodeComponent(orderText)}";
+// 3. وظيفة عرض الوجبات في الصفحة
+function displayMeals() {
+    const mealsList = document.getElementById('meals-list');
+    if (!mealsList) return;
 
-    await launchUrl(Uri.parse(url),
-        mode: LaunchMode.externalApplication);
-  }
+    mealsList.innerHTML = ""; // تفريغ القائمة قبل العرض
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Diet Restaurant"),
-        backgroundColor: Colors.green,
-      ),
+    mealsData.forEach(meal => {
+        // تجهيز رسالة الواتساب
+        const message = `مرحباً، أود طلب وجبة: ${meal.name} (السعر: ${meal.price} ريال)`;
+        const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
 
-      body: ListView(
-        children: [
-          /// MENU SECTION
-          Padding(
-            padding: const EdgeInsets.all(10),
-            child: Text(
-              "Menu",
-              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-            ),
-          ),
-
-          ...menu.map((item) {
-            return Card(
-              margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-              child: ListTile(
-                title: Text(item.name),
-                subtitle: Text("${item.calories} kcal - ${item.price} SAR"),
-                trailing: ElevatedButton(
-                  onPressed: () => addToCart(item),
-                  child: Text("Add"),
-                ),
-              ),
-            );
-          }).toList(),
-
-          Divider(),
-
-          /// CART SECTION
-          Padding(
-            padding: const EdgeInsets.all(10),
-            child: Text(
-              "Cart",
-              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-            ),
-          ),
-
-          if (cart.isEmpty)
-            Padding(
-              padding: EdgeInsets.all(10),
-              child: Text("Cart is empty"),
-            ),
-
-          ...cart.asMap().entries.map((entry) {
-            int index = entry.key;
-            FoodItem item = entry.value;
-
-            return ListTile(
-              title: Text(item.name),
-              trailing: IconButton(
-                icon: Icon(Icons.delete, color: Colors.red),
-                onPressed: () => removeFromCart(index),
-              ),
-            );
-          }).toList(),
-
-          SizedBox(height: 10),
-
-          Padding(
-            padding: const EdgeInsets.all(10),
-            child: Text(
-              "Total: $totalPrice SAR",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-          ),
-
-          Padding(
-            padding: const EdgeInsets.all(10),
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.green,
-                minimumSize: Size(double.infinity, 50),
-              ),
-              onPressed: cart.isEmpty ? null : sendWhatsAppOrder,
-              child: Text("Order via WhatsApp"),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+        const mealCard = `
+            <div style="background: #fff; border-radius: 20px; margin: 20px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.1); direction: rtl; font-family: sans-serif;">
+                <img src="${meal.image}" style="width: 100%; height: 220px; object-fit: cover;" alt="${meal.name}">
+                <div style="padding: 20px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <h2 style="margin: 0; font-size: 20px; color: #2d3436;">${meal.name}</h2>
+                        <span style="background: #f1f2f6; padding: 5px 10px; border-radius: 10px; font-size: 14px; color: #636e72;">🔥 ${meal.calories} سعرة</span>
+                    </div>
+                    <p style="color: #636e72; font-size: 14px; margin: 10px 0;">${meal.description}</p>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 15px;">
+                        <span style="font-size: 22px; font-weight: bold; color: #27ae60;">${meal.price} <small style="font-size: 12px;">ريال</small></span>
+                        <a href="${whatsappUrl}" target="_blank" style="background: #25D366; color: white; padding: 10px 20px; border-radius: 12px; text-decoration: none; font-weight: bold; font-size: 16px;">
+                            طلب عبر واتساب 💬
+                        </a>
+                    </div>
+                </div>
+            </div>
+        `;
+        mealsList.innerHTML += mealCard;
+    });
 }
+
+// تشغيل الكود عند فتح الصفحة
+window.onload = displayMeals;
