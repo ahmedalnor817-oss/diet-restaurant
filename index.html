@@ -7,14 +7,14 @@
     <meta name="description" content="موقع تغذية سعودي حصري يعرض تشكيلة واسعة من الأصناف الغذائية مع صور احترافية وتجربة سهلة الاستخدام.">
     <meta name="keywords" content="دايت سنتر, أصناف, تغذية, صور, السعودية, حصري, سهل">
     <!-- خطوط عربية احترافية -->
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
-    <!-- أيقونات (Font Awesome) – اختيارية для تحسين التجربة -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-xxxx" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    //fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- أيقونات (Font Awesome) – اختيارية لتجربة أفضل -->
+    //cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-xxxx" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         /* ===== المتغيرات العالمية ===== */
         :root {
-            --primary: #2e7d32;   /* أخضر هادئ */
-            --secondary: #f5a623; /* برتقالي فاتح */
+            --primary: #2e7d32;   /* أخضر هادئ مستوحى من دايت سنتر */
+            --secondary: #f5a623; /* برتقالي فاتح للتسليط */
             --bg: #fafafa;
             --card: #ffffff;
             --text: #212529;
@@ -100,6 +100,29 @@
             background:var(--secondary);
             border-radius:2px;
         }
+        /* ===== أزرار الفلاتر (الأقسام) ===== */
+        .filter-bar{
+            display:flex;
+            gap:.5rem;
+            flex-wrap:wrap;
+            justify-content:center;
+            margin-bottom:2rem;
+        }
+        .filter-bar button{
+            background:#f8f9fa;
+            border:2px solid var(--primary);
+            color:var(--primary);
+            padding:.5rem 1rem;
+            border-radius:50px;
+            font-weight:600;
+            cursor:pointer;
+            transition:var(--transition);
+        }
+        .filter-bar button.active,
+        .filter-bar button:hover{
+            background:var(--primary);
+            color:#fff;
+        }
         /* ===== شبكة الأصناف ===== */
         .items-grid{
             display:grid;
@@ -176,6 +199,8 @@
             #hero h2{font-size:2.4rem;}
             section{padding:2.5rem .8rem;}
             h2{font-size:1.7rem;}
+            .filter-bar{flex-direction:column;align-items:stretch;}
+            .filter-bar button{width:100%;margin:.2rem 0;}
         }
         @media(max-width:480px){
             nav{flex-direction:column;gap:.5rem;width:100%;}
@@ -202,6 +227,18 @@
         <p>استكشف تشكيلة واسعة من الأصناف الغذائية الصحية والمُعدّة بعناية.</p>
     </section>
 
+    <!-- ===== فلاتر الأقسام ===== -->
+    <section id="filters">
+        <div class="filter-bar">
+            <button class="active" data-category="all">الكل</button>
+            <button data-category="breakfast">إفطار</button>
+            <button data-category="lunch">غداء</button>
+            <button data-category="dinner">عشاء</button>
+            <button data-category="snack">سناكات</button>
+            <button data-category="dessert">حلويات</button>
+        </div>
+    </section>
+
     <!-- ===== قسم الأصناف ===== -->
     <section id="items">
         <h2>أصنافنا المتنوعة</h2>
@@ -215,41 +252,4 @@
 
     <!-- ===== جافا سكريبت مدمج ===== -->
     <script>
-        /* ====== بيانات الأصناف (وجبات متنوعة) ====== */
-        const items = [
-            {title: 'وجبة إفطار خفيفة', price: 12, desc: 'بيض مسلوق + خضروات + شريحة توست أسمر + ثمرة فاكهة', img: 'https://images.unsplash.com/photo-1582722662480-41f3abb39b53?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDF8fGJyZWFkZmFzdHxlbnwwfHx8fDE2NTkzNzYzNDQ&ixlib=rb-4.0.3&q=80&w=400'},
-            {title: 'وجبة غداء متوازنة', price: 18, desc: 'صدور دجاج مشوية + أرز بني + سلطة فوشول مع ليمون وزيت زيتون', img: 'https://images.unsplash.com/photo-1546069901-296d410bde3e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDF8fGx1bmNoJTIwd2l0aCUyMGFycmlvfGVufDB8fHx8MTY1OTM3NjM0NQ&ixlib=rb-4.0.3&q=80&w=400'},
-            {title: 'وجبة عشاء خفيف', price: 15, desc: 'سمك السلمون المشوي + بخار خضروات + سلطة خضراء', img: 'https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDF8fHNlbW9uJTIwZmlzaHxlbnwwfHx8fDE2NTkzNzYzNDg&ixlib=rb-4.0.3&q=80&w=400'},
-            {title: 'وجبة إفطار للطاقة', price: 14, desc: 'شوفان كامل + موز + زبدة فول سوداني طبيعي + حليب كامل + مكسرات', img: 'https://images.unsplash.com/photo-1550583724-b2692b85b150?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDF8fGJyZWFzdCUyMGJyZWFrZmFzdHxlbnwwfHx8fDE2NTkzNzYzNTM&ixlib=rb-4.0.3&q=80&w=400'},
-            {title: 'وجبة غداء للطاقة', price: 22, desc: 'لحم بقر مشوي + بطاطا حلوة مشوية + بروكلي + سلاطة', img: 'https://images.unsplash.com/photo-1586190848861-99aa4a171e90?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDF8fGJyZWlzJTIwbWVhdCUyMHdpdGglMjBiZWVkJTIwZnJpZWRlfGVufDB8fHx8MTY1OTM3NzE0OA&ixlib=rb-4.0.3&q=80&w=400'},
-            {title: 'وجبة عشاء للطاقة', price: 16, desc: 'دجاج التندوري + أرز بشعير + عدس أحمر + سلطة', img: 'https://images.unsplash.com/photo-1600891964599-461b1d316f0c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDF8fHRpYWtlJTIwYW5kJTIwYXJheiUyMkRyYWlzfGVufDB8fHx8MTY1OTM3NzE1OA&ixlib=rb-4.0.3&q=80&w=400'},
-            {title: 'سلطة اليونان', price: 10, desc: 'خيار، طماطم، بصل أحمر، زيتون أسود، جبنة فيتا، زيت زيتون', img: 'https://images.unsplash.com/photo-1550907576-3b4449efef7a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDF8fGhlYWx0aHx8fHx8fHx8MTY1OTM3NjMwNQ&ixlib=rb-4.0.3&q=80&w=400'},
-            {title: 'وعاء حمص بالطحينة', price: 11, desc: 'حمص منزلي مع طحينة، عصير ليمون، ثوم، وزيت زيتون', img: 'https://images.unsplash.com/photo-1567620905732-2d1ec7ab744e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDF8fCBoYWxzaGF9fHx8fHx8MTY1OTM3NjMxOA&ixlib=rb-4.0.3&q=80&w=400'},
-            {title: 'شريحة لحم مشوي', price: 20, desc: 'لحم بقر مشوي مع توابل عربية، جانب من الخضار المشوي', img: 'https://images.unsplash.com/photo-1586190848861-99aa4a171e90?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDF8fGJyZWlzJTIwbWVhdCUyMHdpdGglMjBiZWVkJTIwZnJpZWRlfGVufDB8fHx8MTY1OTM3NzE0OA&ixlib=rb-4.0.3&q=80&w=400'},
-            {title: 'شوربة عدس حمراء', price: 9, desc: 'عدس أحمر مطهو مع جزر وكرفس وتوابل خفيفة', img: 'https://images.unsplash.com/photo-1567620905732-2d1ec7ab744e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDF8fCBoYWxzaGF9fHx8fHx8MTY1OTM3NjMxOA&ixlib=rb-4.0.3&q=80&w=400'},
-            {title: 'طاجن دجاج بالزعفران', price: 25, desc: 'دجاج مشوي مع زعفران، أرباح، وجوز هند', img: 'https://images.unsplash.com/photo-1590455531343-0d8e4b2b2c8a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDF8fGhlYWx0aHx8fHx8fHx8MTY1OTM3NjMwOA&ixlib=rb-4.0.3&q=80&w=400'},
-            {title: 'كبة لحم بالباذنجان', price: 22, desc: 'كبة لحم محشية بالباذنجان المشوي والبهارات', img: 'https://images.unsplash.com/photo-1586190848861-99aa4a171e90?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDF8fGJyZWlzJTIwbWVhdCUyMHdpdGglMjBiZWVkJTIwZnJpZWRlfGVufDB8fHx8MTY1OTM3NzE0OA&ixlib=rb-4.0.3&q=80&w=400'},
-            {title: 'فواكه مقطعة مجاناً', price: 0, desc: 'تشكيلة فواكه موسمية (تفاح، موز، عنب)', img: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDF8fGhlYWx0aHx8fHx8fHx8MTY1OTM3NjMxOA&ixlib=rb-4.0.3&q=80&w=400'},
-            {title: 'زبادي يوناني مع عسل', price: 8, desc: 'زبادي يوناني سميك مع قطره عسل طبيعي', img: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDF8fGhlYWx0aHx8fHx8fHx8MTY1OTM3NjMwOA&ixlib=rb-4.0.3&q=80&w=400'},
-            {title: 'مكسرات مشوية مالحة', price: 10, desc: 'لوز، كاجو، وفستق مشوية مع قليل من الملح', img: 'https://images.unsplash.com/photo-1586190848861-99aa4a171e90?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDF8fGJyZWlzJTIwbWVhdCUyMHdpdGglMjBiZWVkJTIwZnJpZWRlfGVufDB8fHx8MTY1OTM3NzE0OA&ixlib=rb-4.0.3&q=80&w=400'}
-        ];
-
-        document.addEventListener('DOMContentLoaded', () => {
-            const itemsContainer = document.getElementById('itemsContainer');
-            items.forEach(it => {
-                const card = document.createElement('div');
-                card.className = 'item-card';
-                card.innerHTML = `
-                    <img src="${it.img}" alt="${it.title}">
-                    <div class="content">
-                        <h3>${it.title}</h3>
-                        <p>${it.desc}</p>
-                        <p class="price">${it.price} SAR</p>
-                    </div>
-                `;
-                itemsContainer.appendChild(card);
-            });
-        });
-    </script>
-</body>
-</html>
+        /* ====== بيانات الأصنا
