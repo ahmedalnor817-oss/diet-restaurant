@@ -3,13 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>دايت سنتر – حساب، نصائح، أصناف وتواصل مع سلة تسوق</title>
-    <!-- تحسين محركات البحث básicos -->
-    <meta name="description" content="موقع تغذية سعودي شامل: حساب مستخدم، نصائح يومية، أصناف وجبات متنوعة، أرقام تواصل ووسائل ميديا، وسلّة تسوق.">
-    <meta name="keywords" content="دايت سنتر, حساب, نصائح, أصناف, تواصل, ميديا, سلة تسوق, السعودية">
-    <!-- خطوط عربية احترافية من Google Fonts -->
+    <title>دايت سنتر – تطبيق تغذية احترافي</title>
+    <meta name="description" content="تطبيق تغذية سعودي: تسجيل الدخول، حاسبة سعرات، باقات وعروض، أصناف فردية، سلّة تسوق، تواصل ووسائل ميديا.">
+    <meta name="keywords" content="دايت سنتر, حساب, سعرات, باقات, عروض, أصناف, تواصل, ميديا, السعودية">
+    <!-- خطوط عربية احترافية -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
-    <!-- أيقونات التواصل (Font Awesome مجاني) -->
+    <!-- أيقونات (Font Awesome) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-xxxx" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         /* ===== المتغيرات العالمية ===== */
@@ -24,7 +23,7 @@
             --shadow: 0 4px 12px rgba(0,0,0,0.08);
             --transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
             --max-width: 1200px;
-            --cart-width: 340px;
+            --cart-width: 360px;
         }
         /* ===== إعادة ضبط أساسية ===== */
         *, *::before, *::after { box-sizing: border-box; margin:0; padding:0; }
@@ -219,65 +218,94 @@
             transition:var(--transition);
         }
         #hero .btn:hover{transform:translateY(-3px);box-shadow:0 6px 16px rgba(0,0,0,.25);}
-        /* ===== تبويبات الحساب ===== */
-        .account-tabs{
-            display:flex;
-            justify-content:center;
-            gap:.5rem;
-            margin-bottom:1.5rem;
-            flex-wrap:wrap;
-        }
-        .tab{
-            background:#f8f9fa;
-            border:2px solid var(--primary);
-            color:var(--primary);
-            padding:.6rem 1.2rem;
-            border-radius:50px;
-            font-weight:600;
-            cursor:pointer;
-            transition:var(--transition);
-        }
-        .tab.active,.tab:hover{
-            background:var(--primary);
-            color:#fff;
-        }
-        .account-form{
+        /* ===== نموذج تسجيل الدخول (مبدئي) ===== */
+        #loginOverlay{
             display:none;
-            max-width:400px;
-            margin:0 auto 2rem;
+            position:fixed;
+            inset:0;
+            background:rgba(0,0,0,.6);
+            z-index:1050;
+            align-items:center;
+            justify-content:center;
+        }
+        #loginOverlay.active{display:flex;}
+        #loginOverlay .login-box{
             background:var(--card);
-            padding:2rem;
+            color:var(--text);
             border-radius:var(--radius);
-            box-shadow:var(--shadow);
+            width:90%;
+            max-width:380px;
+            padding:2rem;
+            position:relative;
         }
-        .account-form.active{display:block;}
-        .account-form label{
-            display:block;margin-bottom:.5rem;font-weight:600;
-        }
-        .account-form input{
+        #loginOverlay .login-box h2{margin-top:0;margin-bottom:1.5rem;text-align:center;color:var(--primary);}
+        #loginOverlay .login-box label{display:block;margin-bottom:.4rem;font-weight:600;}
+        #loginOverlay .login-box input{
             width:100%;padding:.8rem;
             border:1px solid #ddd;
             border-radius:var(--radius);
             font-size:1rem;
-            margin-top:.25rem;
+            margin-top:.2rem;
             transition:border-color var(--transition);
         }
-        .account-form input:focus{
+        #loginOverlay .login-box input:focus{
             outline:none;
             border-color:var(--primary);
             box-shadow:0 0 0 2px rgba(46,125,50,.2);
         }
-        .account-form button{
+        #loginOverlay .login-box button{
             width:100%;
             background:var(--primary);
             color:#fff;
+            border:none;
             padding:.9rem;
             font-size:1rem;
-            margin-top:1rem;
+            margin-top:1.5rem;
             border-radius:var(--radius);
             transition:background var(--transition);
         }
-        .account-form button:hover{background:#1b5e2b;}
+        #loginOverlay .login-box button:hover{background:#1b5e2b;}
+        /* ===== حاسبة السعرات ===== */
+        .calc-form{
+            display:grid;
+            gap:1rem;
+            max-width:460px;
+            margin:0 auto 2rem;
+        }
+        .calc-form label{
+            font-weight:600;
+            display:flex;
+            flex-direction:column;
+            gap:.3rem;
+        }
+        .calc-form input,
+        .calc-form select{
+            padding:.95rem;
+            border:1px solid #e9ecef;
+            border-radius:var(--radius);
+            font-size:1rem;
+            transition:border-color var(--transition),box-shadow var(--transition);
+        }
+        .calc-form input:focus,
+        .calc-form select:focus{
+            outline:none;
+            border-color:var(--primary);
+            box-shadow:0 0 0 3px rgba(0,108,53,.2);
+        }
+        #calcBtn{
+            align-self:start;
+            background:var(--secondary);
+            color:#212529;
+        }
+        #calcBtn:hover{background:#e0a800;}
+        #result{
+            font-weight:600;
+            font-size:1.3rem;
+            text-align:center;
+            color:var(--primary);
+            margin-top:1rem;
+            min-height:2.2rem;
+        }
         /* ===== بطاقات الأصناف ===== */
         .items-grid{
             display:grid;
@@ -348,6 +376,128 @@
             transition:background var(--transition);
         }
         .add-to-cart:hover{background:#1b5e2b;}
+        /* ===== باقات وعروض خاصة ===== */
+        .packages-grid{
+            display:grid;
+            gap:2rem;
+            grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+            margin-top:2rem;
+        }
+        .package-card{
+            background:var(--card);
+            border-radius:var(--radius);
+            box-shadow:var(--shadow);
+            overflow:hidden;
+            transition:var(--transition);
+            border:2px solid transparent;
+            cursor:pointer;
+        }
+        .package-card:hover{
+            transform:translateY(-6px);
+            box-shadow:0 8px 20px rgba(0,0,0,.12);
+            border-color:var(--primary);
+        }
+        .package-card .img{
+            height:180px;
+            background:#f0f0f0;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            color:var(--muted);
+            font-size:.9rem;
+        }
+        .package-card .content{
+            padding:1.5rem;
+        }
+        .package-card h3{
+            margin:0 0 .6rem;
+            font-size:1.35rem;
+            color:var(--primary);
+            display:flex;
+            align-items:center;
+            gap:.4rem;
+        }
+        .package-card h3::before{content:"📦";font-size:1.2rem;}
+        .package-card p{
+            margin:.5rem 0;
+            font-size:.98rem;
+            color:var(--muted);
+            line-height:1.6;
+        }
+        .package-card .price{
+            font-weight:700;
+            font-size:1.2rem;
+            margin-top:1rem;
+            color:var(--secondary);
+            display:flex;
+            align-items:baseline;
+            gap:.3rem;
+        }
+        .package-card .price::before{content:"SAR";font-size:.9rem;opacity:.8;}
+        .package-card .btn{
+            width:100%;
+            background:var(--primary);
+            color:#fff;
+            border:none;
+            padding:.8rem;
+            font-size:1rem;
+            margin-top:1.5rem;
+            border-radius:var(--radius);
+            transition:background var(--transition);
+        }
+        .package-card .btn:hover{background:#1b5e2b;}
+        /* ===== نموذج تفاصيل الباقة (مودال) ===== */
+        #packageModal{
+            display:none;
+            position:fixed;
+            inset:0;
+            background:rgba(0,0,0,.5);
+            z-index:1100;
+            align-items:center;
+            justify-content:center;
+        }
+        #packageModal.active{display:flex;}
+        #packageModal .package-content{
+            background:var(--card);
+            color:var(--text);
+            border-radius:var(--radius);
+            width:90%;
+            max-width:500px;
+            max-height:80vh;
+            overflow-y:auto;
+            position:relative;
+            padding:2rem;
+        }
+        #packageModal .package-header{
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            margin-bottom:1.5rem;
+        }
+        #packageModal .package-header h3{margin:0;font-size:1.5rem;color:var(--primary);}
+        #packageModal .package-close{
+            background:none;
+            border:none;
+            font-size:1.8rem;
+            color:var(--muted);
+            cursor:pointer;
+        }
+        #packageModal .package-body p{margin:.8rem 0;line-height:1.6;}
+        #packageModal .package-footer{
+            margin-top:2rem;
+            text-align:center;
+        }
+        #packageModal .package-footer button{
+            background:var(--primary);
+            color:#fff;
+            border:none;
+            padding:.9rem 1.8rem;
+            font-size:1rem;
+            border-radius:var(--radius);
+            cursor:pointer;
+            transition:background var(--transition);
+        }
+        #packageModal .package-footer button:hover{background:#1b5e2b;}
         /* ===== نصائح اليومية ===== */
         #tips{
             background:#fff8f0;
@@ -405,6 +555,7 @@
             #hero h2{font-size:2.4rem;}
             section{padding:2.5rem .8rem;}
             h2{font-size:1.7rem;}
+            .packages-grid{grid-template-columns:1fr;}
         }
         @media(max-width:480px){
             nav{flex-direction:column;gap:.5rem;width:100%;}
@@ -420,8 +571,9 @@
             <p>صحتك، هدفنا</p>
         </div>
         <nav>
-            <a href="#account">الحساب</a>
+            <a href="#hero">الرئيسية</a>
             <a href="#items">الأصناف</a>
+            <a href="#packages">الباقات</a>
             <a href="#tips">نصائح</a>
             <a href="#contact">تواصل</a>
         </nav>
@@ -447,37 +599,78 @@
         </div>
     </div>
 
-    <!-- ===== قسم الحساب ===== -->
-    <section id="account">
-        <h2>حسابك الشخصي</h2>
-        <div class="account-tabs">
-            <button class="tab active" data-tab="login">تسجيل الدخول</button>
-            <button class="tab" data-tab="register">إنشاء حساب</button>
+    <!-- ===== نموذج تفاصيل الباقة (مودال) ===== -->
+    <div id="packageModal">
+        <div class="package-content">
+            <div class="package-header">
+                <h3 id="packageTitle">عنوان الباقة</h3>
+                <button class="package-close" id="packageClose">&times;</button>
+            </div>
+            <div id="packageBody"></div>
+            <div class="package-footer">
+                <button id="packageAddToCart">إضافة للسلال</button>
+                <button id="packageCloseBtn">إغلاق</button>
+            </div>
         </div>
+    </div>
 
-        <!-- نموذج تسجيل الدخول -->
-        <form class="account-form active" id="loginForm">
+    <!-- ==Overlay تسجيل الدخول== -->
+    <div id="loginOverlay">
+        <div class="login-box">
+            <h2>تسجيل الدخول</h2>
             <label>البريد الإلكتروني:<input type="email" id="loginEmail" placeholder="example@mail.com" required></label>
             <label>كلمة المرور:<input type="password" id="loginPass" placeholder="••••••••" required></label>
-            <button type="submit">دخول</button>
-            <p style="margin-top:.8rem;font-size:.9rem;color:var(--muted);">ليس لديك حساب؟ انقر على “إنشاء حساب” أعلاه.</p>
-        </form>
+            <button type="submit" id="loginBtn">دخول</button>
+            <p style="margin-top:.8rem;font-size:.9rem;color:var(--muted);">ليس لديك حساب؟ يمكنك المتابعة كضيف للاستكشاف.</p>
+        </div>
+    </div>
 
-        <!-- نموذج إنشاء حساب -->
-        <form class="account-form" id="registerForm">
-            <label>الاسم الكامل:<input type="text" id="regName" placeholder="اسمك الكامل" required></label>
-            <label>البريد الإلكتروني:<input type="email" id="regEmail" placeholder="example@mail.com" required></label>
-            <label>كلمة المرور:<input type="password" id="regPass" placeholder="••••••••" required></label>
-            <label>تأكيد كلمة المرور:<input type="password" id="regPass2" placeholder="••••••••" required></label>
-            <button type="submit">إنشاء الحساب</button>
-            <p style="margin-top:.8rem;font-size:.9rem;color:var(--muted);">بالضغط على زر الإ creation، أنت توافق على شروط الاستخدام وسياسة الخصوصية.</p>
-        </form>
+    <!-- ===== قسم البطل ===== -->
+    <section id="hero">
+        <h2>صحتك، أولويتنا</h2>
+        <p>ابدأ رحلتك الصحية الآن مع حساب مخصص ونصائح يومية تساعدك على تحقيق أهدافك.</p>
+        <a href="#items" class="btn">استعرض الأصناف</a>
+    </section>
+
+    <!-- ===== حاسبة السعرات الحرارية ===== -->
+    <section id="calculator">
+        <h2>حاسبة السعرات الحرارية اليومية</h2>
+        <p class="text-muted" style="max-width:500px;margin:0 auto 1.5rem;">احسب احتياجك اليومي من السعرات بناءً على وزنك، طولك، عمرك، ومستوى نشاطك باستخدام معادلة Mifflin-St Jeor المعتمدة عالمياً.</p>
+        <div class="calc-form">
+            <label>الوزن (كجم): <input type="number" id="weight" min="20" max="250" placeholder="مثلاً: 70"></label>
+            <label>الطول (سم): <input type="number" id="height" min="100" max="250" placeholder="مثلاً: 175"></label>
+            <label>العمر: <input type="number" id="age" min="10" max="120" placeholder="مثلاً: 30"></label>
+            <label>الجنس:
+                <select id="gender">
+                    <option value="male">ذكر</option>
+                    <option value="female">أنثى</option>
+                </select>
+            </label>
+            <label>مستوى النشاط:
+                <select id="activity">
+                    <option value="1.2">قليل جدًا (عمل مكتبي، wenig حركة)</option>
+                    <option value="1.375">خفيف (تمارين خفيفة 1-3 أيام/أسبوع)</option>
+                    <option value="1.55">متوسط (تمارين معتدلة 3-5 أيام/أسبوع)</option>
+                    <option value="1.725">عالي (تمارين شديدة 6-7 أيام/أسبوع)</option>
+                    <option value="1.9">شديد جدًا (تمارين شديدة + عمل جسدي)</option>
+                </select>
+            </label>
+            <button id="calcBtn">احسب السعرات</button>
+        </div>
+        <div id="result"></div>
+        <p class="text-muted" style="font-size:.9rem;margin-top:1rem;">ملاحظة: هذه القيمة تقديرية. يُفضَّل استشارة أخصائي تغذية لتحديد الاحتياج الدقيق حسب حالتك الصحية.</p>
     </section>
 
     <!-- ===== قسم الأصناف (وجبات/برامج) ===== -->
     <section id="items">
         <h2>أصنافنا المتنوعة</h2>
         <div class="items-grid" id="itemsContainer"></div>
+    </section>
+
+    <!-- ===== قسم الباقات والعروض ===== -->
+    <section id="packages">
+        <h2>باقات وعروض خاصة</h2>
+        <div class="packages-grid" id="packagesContainer"></div>
     </section>
 
     <!-- ===== قسم النصائح اليومية ===== -->
@@ -490,14 +683,14 @@
     <section id="contact">
         <h2>تواصل معنا</h2>
         <p>لأي استفسارات أو لحجز استشارة غذائية، فريقنا جاهز للمساعدة عبر قنوات متعددة:</p>
-        <p class="phones">📞 9200 17373 • 9200 05555 • 800 124 0000</p>
+        <p class="phones">📞 0563683212 • 9200 17373 • 9200 05555</p>
         <p>✉️ <a href="mailto:info@dietcenter.com.sa">info@dietcenter.com.sa</a></p>
         <div class="social">
             <a href="https://facebook.com/dietcenterksa" target="_blank" rel="noopener"><i class="fab fa-facebook-f"></i></a>
             <a href="https://twitter.com/dietcenterksa" target="_blank" rel="noopener"><i class="fab fa-twitter"></i></a>
             <a href="https://instagram.com/dietcenterksa" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
             <a href="https://snapchat.com/add/dietcenterksa" target="_blank" rel="noopener"><i class="fab fa-snapchat-ghost"></i></a>
-            <a href="https://wa.me/966920017373" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a>
+            <a href="https://wa.me/966563683212" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a>
         </div>
     </section>
 
@@ -508,7 +701,24 @@
 
     <!-- ===== جافا سكريبت مدمج ===== -->
     <script>
-        /* ====== إعدادات الحساب (تبويبات) ====== */
+        /* ====== عرض نافذة تسجيل الدخول عند الدخول لأول مرة ====== */
+        document.addEventListener('DOMContentLoaded', () => {
+            const loginOverlay = document.getElementById('loginOverlay');
+            // إظهار نافذة الدخول؛ يمكن للمستخدم المتابعة كضيف إذا preferred
+            loginOverlay.classList.add('active');
+            document.getElementById('loginBtn').addEventListener('click', () => {
+                const email = document.getElementById('loginEmail').value.trim();
+                const pass = document.getElementById('loginPass').value;
+                if (!email || !pass) {
+                    alert('يرجى إدخال البريد وكلمة المرور');
+                    return;
+                }
+                // هنا يمكن استدعاء خلفية للتحقق؛ للتوافر التجريبي نقبل أي قيم
+                loginOverlay.classList.remove('active');
+            });
+        });
+
+        /* ====== إعدادات الحساب (تبويبات) – غير مستخدم الآن لكن zůstává للإمكانية المستقبلية ====== */
         const tabs = document.querySelectorAll('.account-tabs .tab');
         const forms = document.querySelectorAll('.account-form');
 
@@ -660,6 +870,136 @@
                     if (item) addToCart(item);
                 });
             });
+        });
+
+        /* ====== باقات وعروض خاصة ====== */
+        const packages = [
+            {
+                title: "باقة التخسيس الشاملة",
+                desc: "برنامج متكامل يشمل 5 وجبات يومياً + استشارة أخصائي تغذية أسبوعياً + متابعة وزن، مناسب للهدف فقدان 5‑10 كجم خلال 8 أسابيع.",
+                price: 450, // SAR شهرياً
+                img: 'https://images.unsplash.com/photo-1546069901-296d410bde3e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDF8fGx1bmNoJTIwd2l0aCUyMGFycmlvfGVufDB8fHx8MTY1OTM3NjM0NQ&ixlib=rb-4.0.3&q=80&w=400',
+                details: `
+                    <strong>ما تشمله الباقة:</strong><br>
+                    • 5 وجبات متوازنة يومياً (فطور، غداء، عشاء + وجبتين خفيفتين)<br>
+                    • استشارة أخصائي تغذية كل أسبوع عبر مكالمة فيديو<br>
+                    • خطة تمارين منزلية مخصصة<br>
+                    • متابعة وزن وقياسات جسم كل أسبوعين<br>
+                    • وصول إلى تطبيق تتبع الوجبات والماء<br>
+                    <br>
+                    <strong>الفكرة المقترحة:</strong> إذا كنت تبحث عن بداية صحية ومنظمة لفقدان الوزن دون جوع، هذه الباقة توفر لك كل ما تحتاجه من تغذية وإرشاد ومساعدة مستمرة.<br>
+                `
+            },
+            {
+                title: "باقة بناء العضلات",
+                desc: "برنامج غني بالبروتين والكربوهيدرات المعقدة لدعم نمو العضلات وتحسين الأداء الرياضي، مناسب للرياضيين ومحبي كمال الأجسام.",
+                price: 520, // SAR شهرياً
+                img: 'https://images.unsplash.com/photo-1586190848861-99aa4a171e90?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDF8fGJyZWlzJTIwbWVhdCUyMHdpdGglMjBiZWVkJTIwZnJpZWRlfGVufDB8fHx8MTY1OTM3NzE0OA&ixlib=rb-4.0.3&q=80&w=400',
+                details: `
+                    <strong>ما تشمله الباقة:</strong><br>
+                    • 6 وجبات عالية البروتين يومياً<br>
+                    • مكملات بروتين موصى بها (اختياري)<br>
+                    • برنامج رفع أثقال مقسم إلى 4 أيام أسبوعياً<br>
+                    • استشارة مدرب كل أسبوعين لتعديل البرنامج<br>
+                    • تتبع تقدم القوة والكتلة العضلية<br>
+                    <br>
+                    <strong>الفكرة المقترحة:</strong> لعضلات أقوى وتعافي أسرع، هذه الباقة تزود جسمك بالوقود المناسب وتوفر الإشراف المهني لضمان النتائج المثلى.<br>
+                `
+            },
+            {
+                title: "باقة الصيام المتوازن",
+                desc: "برنامج خاص لأشهر الصيام (رمضان أو غيره) يضمن الحصول على جميع المغذيات خلال فترة الإفطار والسحور مع الحفاظ على الطاقة والتركيز.",
+                price: 380, // SAR شهرياً
+                img: 'https://images.unsplash.com/photo-1550907576-3b4449efef7a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDF8fGhlYWx0aHx8fHx8fHx8MTY1OTM3NjMwNQ&ixlib=rb-4.0.3&q=80&w=400',
+                details: `
+                    <strong>ما تشمله الباقة:</strong><br>
+                    • وجبتي سحور وإفطار متوازنتين يومياً<br>
+                    • نصائح للترطيب وتجنب الجفاف خلال الصيام<br>
+                    • مقترحات لوجبات خفيفة بين الإفطار والسحور<br>
+                    • متابعة وزن ومستوى الطاقة طوال الشهر<br>
+                    • دعم نفسي وتغذوي للاستفادة القصوى من فترة الصيام<br>
+                    <br>
+                    <strong>الفكرة المقترحة:</strong> إذا أردت الاستفادة من شهر الصيام لتحسين صحتك ووزنك دون فقدان الطاقة، هذه الباقة تقدم خطة غذائية مدروسة تتوافق مع تقاليد الصيام.<br>
+                `
+            }
+        ];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const packagesContainer = document.getElementById('packagesContainer');
+            packages.forEach(pack => {
+                const card = document.createElement('div');
+                card.className = 'package-card';
+                card.innerHTML = `
+                    <div class="img" style="background-image:url('${pack.img}');"></div>
+                    <div class="content">
+                        <h3>${pack.title}</h3>
+                        <p>${pack.desc}</p>
+                        <p class="price">${pack.price} SAR / شهر</p>
+                        <button class="btn">عرض التفاصيل</button>
+                    </div>
+                `;
+                packagesContainer.appendChild(card);
+            });
+
+            // مستمعات أزرار "عرض التفاصيل"
+            document.querySelectorAll('.package-card .btn').forEach((btn, index) => {
+                btn.addEventListener('click', () => {
+                    const pack = packages[index];
+                    document.getElementById('packageTitle').textContent = pack.title;
+                    document.getElementById('packageBody').innerHTML = pack.details;
+                    // إعادة تعيين أزرار المودال
+                    document.getElementById('packageAddToCart').onclick = () => {
+                        // عند الضغط على إضافة للسلال نعامل الباقة كعنصر عادي (يمكن تعديل السعر والوصف حسب الحاجة)
+                        const pseudoItem = {
+                            title: pack.title,
+                            price: pack.price,
+                            desc: "باقة غذائية شاملة",
+                            img: pack.img
+                        };
+                        addToCart(pseudoItem);
+                        // إغلاق المودال بعد الإضافة
+                        document.getElementById('packageModal').classList.remove('active');
+                    };
+                    document.getElementById('packageModal').classList.add('active');
+                });
+            });
+        });
+
+        /* ====== إغلاق مودال الباقة ====== */
+        document.getElementById('packageClose').addEventListener('click', () => {
+            document.getElementById('packageModal').classList.remove('active');
+        });
+        document.getElementById('packageCloseBtn').addEventListener('click', () => {
+            document.getElementById('packageModal').classList.remove('active');
+        });
+        // إغلاق بالنقر خارج المحتوى
+        document.getElementById('packageModal').addEventListener('click', e => {
+            if (e.target === document.getElementById('packageModal')) {
+                document.getElementById('packageModal').classList.remove('active');
+            }
+        });
+
+        /* ====== حاسبة السعرات الحرارية (معادلة Mifflin-St Jeor) ====== */
+        document.getElementById('calcBtn').addEventListener('click', () => {
+            const weight = parseFloat(document.getElementById('weight').value);
+            const height = parseFloat(document.getElementById('height').value);
+            const age = parseFloat(document.getElementById('age').value);
+            const gender = document.getElementById('gender').value;
+            const activity = parseFloat(document.getElementById('activity').value);
+
+            if (isNaN(weight) || isNaN(height) || isNaN(age)) {
+                document.getElementById('result').textContent = 'يرجى إدخال جميع القيم بشكل صحيح';
+                return;
+            }
+
+            let bmr;
+            if (gender === 'male') {
+                bmr = 10 * weight + 6.25 * height - 5 * age + 5;
+            } else {
+                bmr = 10 * weight + 6.25 * height - 5 * age - 161;
+            }
+            const tdee = bmr * activity;
+            document.getElementById('result').textContent = `السعرات الحرارية اليومية التقديرية: ${Math.round(tdee)} سعر حراري`;
         });
 
         /* ====== نصائح يومية – يتغيّر كل 10 ثوانٍ ====== */
