@@ -1,64 +1,155 @@
-// 1. ضع رقم جوالك السعودي هنا (بدون صفر في البداية، مثلاً 5xxxxxxx)
-const myPhoneNumber = "9665XXXXXXXX"; 
+import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-// 2. قائمة الوجبات مع الصور
-const manualMeals = [
-    {
-        name: "سلمون مشوي",
-        price: "55",
-        calories: "450",
-        image: "https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=500&q=80" // صورة سلمون احترافية
-    },
-    {
-        name: "دجاج مشوي مع أرز",
-        price: "45",
-        calories: "380",
-        image: "https://images.unsplash.com/photo-1532550907401-a500c9a57435?w=500&q=80" // صورة دجاج مشوي
-    },
-    {
-        name: "سلطة كينوا صحية",
-        price: "35",
-        calories: "220",
-        image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=500&q=80" // صورة سلطة
-    },
-    {
-        name: "ستيك لحم بقر",
-        price: "65",
-        calories: "520",
-        image: "https://images.unsplash.com/photo-1600891964599-f61ba0e24092?w=500&q=80" // صورة ستيك
-    }
-];
-
-function loadMeals() {
-    const container = document.getElementById('meals-list');
-    if (!container) return;
-
-    container.innerHTML = ""; 
-
-    manualMeals.forEach((m) => {
-        // إنشاء رسالة الواتساب التلقائية
-        const whatsappMsg = encodeURIComponent(`مرحباً، أريد طلب وجبة: ${m.name}`);
-        const whatsappLink = `https://wa.me/${myPhoneNumber}?text=${whatsappMsg}`;
-
-        container.innerHTML += `
-            <div style="background:white; margin:15px; border-radius:20px; overflow:hidden; box-shadow: 0 10px 20px rgba(0,0,0,0.1); text-align:right; direction:rtl; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
-                
-                <img src="${m.image}" alt="${m.name}" style="width:100%; height:200px; object-fit:cover;">
-                
-                <div style="padding:20px;">
-                    <h2 style="color:#2c3e50; margin:0 0 10px 0; font-size:22px;">${m.name}</h2>
-                    
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
-                        <span style="color:#e67e22; font-weight:bold; font-size:14px;">🔥 ${m.calories} سعرة</span>
-                        <span style="color:#27ae60; font-size:24px; font-weight:bold;">${m.price} <small style="font-size:14px;">ريال</small></span>
-                    </div>
-
-                    <a href="${whatsappLink}" target="_blank" style="display:block; background:#25D366; color:white; text-align:center; padding:12px; border-radius:12px; text-decoration:none; font-weight:bold; font-size:18px; transition: 0.3s;">
-                       طلب عبر واتساب 💬
-                    </a>
-                </div>
-            </div>`;
-    });
+void main() {
+  runApp(DietApp());
 }
 
-window.onload = loadMeals;
+class DietApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Diet Food App',
+      theme: ThemeData(
+        primarySwatch: Colors.green,
+      ),
+      home: MenuPage(),
+    );
+  }
+}
+
+class FoodItem {
+  final String name;
+  final double price;
+  final int calories;
+
+  FoodItem({required this.name, required this.price, required this.calories});
+}
+
+class MenuPage extends StatefulWidget {
+  @override
+  _MenuPageState createState() => _MenuPageState();
+}
+
+class _MenuPageState extends State<MenuPage> {
+  List<FoodItem> menu = [
+    FoodItem(name: "Chicken Rice Diet", price: 30, calories: 450),
+    FoodItem(name: "Tuna Salad", price: 25, calories: 300),
+    FoodItem(name: "Beef Diet Meal", price: 35, calories: 500),
+    FoodItem(name: "Egg Protein Meal", price: 20, calories: 250),
+  ];
+
+  List<FoodItem> cart = [];
+
+  double get totalPrice =>
+      cart.fold(0, (sum, item) => sum + item.price);
+
+  void addToCart(FoodItem item) {
+    setState(() {
+      cart.add(item);
+    });
+  }
+
+  void removeFromCart(int index) {
+    setState(() {
+      cart.removeAt(index);
+    });
+  }
+
+  Future<void> sendWhatsAppOrder() async {
+    String phone = "966563683212"; // رقمك بالسعودية
+    String orderText = "Hello, I want to order:\n\n";
+
+    for (var item in cart) {
+      orderText += "- ${item.name} (${item.price} SAR)\n";
+    }
+
+    orderText += "\nTotal: $totalPrice SAR";
+
+    String url =
+        "https://wa.me/$phone?text=${Uri.encodeComponent(orderText)}";
+
+    if (await canLaunchUrl(Uri.parse(url))) {
+      await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Diet Menu"),
+        actions: [
+          Padding(
+            padding: EdgeInsets.all(10),
+            child: Center(child: Text("🛒 ${cart.length}")),
+          )
+        ],
+      ),
+      body: Column(
+        children: [
+          Expanded(
+            child: ListView.builder(
+              itemCount: menu.length,
+              itemBuilder: (context, index) {
+                final item = menu[index];
+                return Card(
+                  margin: EdgeInsets.all(10),
+                  child: ListTile(
+                    title: Text(item.name),
+                    subtitle: Text(
+                        "${item.calories} kcal - ${item.price} SAR"),
+                    trailing: ElevatedButton(
+                      child: Text("Add"),
+                      onPressed: () => addToCart(item),
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+
+          Divider(),
+
+          Expanded(
+            child: Column(
+              children: [
+                Text(
+                  "Cart",
+                  style: TextStyle(
+                      fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: cart.length,
+                    itemBuilder: (context, index) {
+                      final item = cart[index];
+                      return ListTile(
+                        title: Text(item.name),
+                        trailing: IconButton(
+                          icon: Icon(Icons.delete),
+                          onPressed: () => removeFromCart(index),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+                Text(
+                  "Total: $totalPrice SAR",
+                  style: TextStyle(fontSize: 18),
+                ),
+                SizedBox(height: 10),
+                ElevatedButton(
+                  onPressed: cart.isEmpty ? null : sendWhatsAppOrder,
+                  child: Text("Order via WhatsApp"),
+                ),
+                SizedBox(height: 10),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
