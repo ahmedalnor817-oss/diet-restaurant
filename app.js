@@ -16,32 +16,40 @@ const db = getFirestore(app);
 async function loadMeals() {
     const container = document.getElementById('meals-list');
     if (!container) return;
-    container.innerHTML = "<p style='text-align:center;'>جاري محاولة الاتصال الأخيرة... 🛠️</p>";
+    
+    // أولاً: سنعرض وجبة افتراضية لنتأكد أن الموقع يعمل برمجياً
+    container.innerHTML = `
+        <div id="loading-status" style="text-align:center; padding:10px; color:#7f8c8d;">جاري فحص الاتصال بـ Firebase...</div>
+    `;
 
     try {
-        // البحث في كل المجلدات التي تسمى meals مهما كان مكانها
         const querySnapshot = await getDocs(collectionGroup(db, 'meals'));
         
         if (querySnapshot.empty) {
-            container.innerHTML = "<div style='text-align:center; padding:20px; border:2px dashed red;'> المجلد لا يزال يظهر فارغاً. <br> جرب فتح الموقع من متصفح خفي (Incognito) </div>";
-            return;
+            document.getElementById('loading-status').innerHTML = "⚠️ متصل بـ Firebase ولكن المجلد لا يزال يظهر فارغاً.";
+        } else {
+            document.getElementById('loading-status').style.display = "none";
+            querySnapshot.forEach((doc) => {
+                const m = doc.data();
+                if (m.name || m.Name) {
+                    renderMeal(container, m.name || m.Name, m.price || 0, m.calories || 0);
+                }
+            });
         }
-
-        container.innerHTML = ""; 
-        querySnapshot.forEach((doc) => {
-            const m = doc.data();
-            if (m.name || m.Name) {
-                container.innerHTML += `
-                    <div style="background:white; margin:15px; padding:20px; border-radius:15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align:center; direction:rtl;">
-                        <h2 style="color:#2c3e50;">${m.name || m.Name}</h2>
-                        <p style="color:#7f8c8d;">🔥 ${m.calories || 0} سعرة</p>
-                        <p style="color:#27ae60; font-size:24px; font-weight:bold;">${m.price || 0} ريال</p>
-                        <a href="https://wa.me/9665XXXXXXXX" style="display:inline-block; background:#27ae60; color:white; padding:10px 25px; border-radius:25px; text-decoration:none; font-weight:bold; margin-top:10px;">اطلب عبر الواتساب ✅</a>
-                    </div>`;
-            }
-        });
     } catch (e) {
-        container.innerHTML = "<p style='text-align:center;'>خطأ في الصلاحيات. تأكد من ضبط Rules في Firebase</p>";
+        document.getElementById('loading-status').innerHTML = "❌ خطأ في الصلاحيات. تأكد من تبويب Rules في Firebase.";
+        console.error(e);
     }
 }
+
+function renderMeal(container, name, price, calories) {
+    container.innerHTML += `
+        <div style="background:white; margin:15px; padding:20px; border-radius:15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align:center; direction:rtl;">
+            <h2 style="color:#2c3e50;">${name}</h2>
+            <p style="color:#7f8c8d;">🔥 ${calories} سعرة</p>
+            <p style="color:#27ae60; font-size:24px; font-weight:bold;">${price} ريال</p>
+            <a href="https://wa.me/9665XXXXXXXX" style="display:inline-block; background:#27ae60; color:white; padding:10px 25px; border-radius:25px; text-decoration:none; font-weight:bold; margin-top:10px;">اطلب عبر الواتساب ✅</a>
+        </div>`;
+}
+
 loadMeals();
