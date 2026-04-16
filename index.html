@@ -252,4 +252,65 @@
 
     <!-- ===== جافا سكريبت مدمج ===== -->
     <script>
-        /* ====== بيانات الأصنا
+        /* ====== بيانات الأصناف مع تصنيف ====== */
+        const items = [
+            // إفطار
+            {title: 'وجبة إفطار خفيفة', price: 12, desc: 'بيض مسلوق + خضروات + شريحة توست أسمر + ثمرة فاكهة', img: 'https://images.unsplash.com/photo-1582722662480-41f3abb39b53?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDF8fGJyZWFkZmFzdHxlbnwwfHx8fDE2NTkzNzYzNDQ&ixlib=rb-4.0.3&q=80&w=400', category: 'breakfast'},
+            {title: 'وجبة إفطار للطاقة', price: 14, desc: 'شوفان كامل + موز + زبدة فول سوداني طبيعي + حليب كامل + مكسرات', img: 'https://images.unsplash.com/photo-1550583724-b2692b85b150?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDF8fGJyZWFzdCUyMGJyZWFrZmFzdHxlbnwwfHx8fDE2NTkzNzYzNTM&ixlib=rb-4.0.3&q=80&w=400', category: 'breakfast'},
+            {title: 'زبادي يوناني مع عسل', price: 8, desc: 'زبادي يوناني سميك مع قطره عسل طبيعي', img: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDF8fGhlYWx0aHx8fHx8fHx8MTY1OTM3NjMwOA&ixlib=rb-4.0.3&q=80&w=400', category: 'breakfast'},
+            // غداء
+            {title: 'وجبة غداء متوازنة', price: 18, desc: 'صدور دجاج مشوية + أرز بني + سلطة فوشول مع ليمون وزيت زيتون', img: 'https://images.unsplash.com/photo-1546069901-296d410bde3e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDF8fGx1bmNoJTIwd2l0aCUyMGFycmlvfGVufDB8fHx8MTY1OTM3NjM0NQ&ixlib=rb-4.0.3&q=80&w=400', category: 'lunch'},
+            {title: 'وجبة غداء للطاقة', price: 22, desc: 'لحم بقر مشوي + بطاطا حلوة مشوية + بروكلي + سلاطة', img: 'https://images.unsplash.com/photo-1586190848861-99aa4a171e90?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDF8fGJyZWlzJTIwbWVhdCUyMHdpdGglMjBiZWVkJTIwZnJpZWRlfGVufDB8fHx8MTY1OTM3NzE0OA&ixlib=rb-4.0.3&q=80&w=400', category: 'lunch'},
+            {title: 'طاجن دجاج بالزعفران', price: 25, desc: 'دجاج مشوي مع زعفران، أرباح، وجوز هند', img: 'https://images.unsplash.com/photo-1590455531343-0d8e4b2b2c8a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDF8fGhlYWx0aHx8fHx8fHx8MTY1OTM3NjMwOA&ixlib=rb-4.0.3&q=80&w=400', category: 'lunch'},
+            // عشاء
+            {title: 'وجبة عشاء خفيف', price: 15, desc: 'سمك السلمون المشوي + بخار خضروات + سلطة خضراء', img: 'https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDF8fHNlbW9uJTIwZmlzaHxlbnwwfHx8fDE2NTkzNzYzNDg&ixlib=rb-4.0.3&q=80&w=400', category: 'dinner'},
+            {title: 'وجبة عشاء للطاقة', price: 16, desc: 'دجاج التندوري + أرز بشعير + عدس أحمر + سلطة', img: 'https://images.unsplash.com/photo-1600891964599-461b1d316f0c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDF8fHRpYWtlJTIwYW5kJTIwYXJheiUyMkRyYWlzfGVufDB8fHx8MTY1OTM3NzE1OA&ixlib=rb-4.0.3&q=80&w=400', category: 'dinner'},
+            {title: 'كبة لحم بالباذنجان', price: 22, desc: 'كبة لحم محشية بالباذنجان المشوي والبهارات', img: 'https://images.unsplash.com/photo-1586190848861-99aa4a171e90?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDF8fGJyZWlzJTIwbWVhdCUyMHdpdGglMjBiZWVkJTIwZnJpZWRlfGVufDB8fHx8MTY1OTM3NzE0OA&ixlib=rb-4.0.3&q=80&w=400', category: 'dinner'},
+            // سناكات
+            {title: 'سلطة اليونان', price: 10, desc: 'خيار، طماطم، بصل أحمر، زيتون أسود، جبنة فيتا، زيت زيتون', img: 'https://images.unsplash.com/photo-1550907576-3b4449efef7a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDF8fGhlYWx0aHx8fHx8fHx8MTY1OTM3NjMwNQ&ixlib=rb-4.0.3&q=80&w=400', category: 'snack'},
+            {title: 'وعاء حمص بالطحينة', price: 11, desc: 'حمص منزلي مع طحينة، عصير ليمون، ثوم، وزيت زيتون', img: 'https://images.unsplash.com/photo-1567620905732-2d1ec7ab744e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDF8fCBoYWxzaGF9fHx8fHx8MTY1OTM3NjMxOA&ixlib=rb-4.0.3&q=80&w=400', category: 'snack'},
+            {title: 'مكسرات مشوية مالحة', price: 10, desc: 'لوز، كاجو، وفستق مشوية مع قليل من الملح', img: 'https://images.unsplash.com/photo-1586190848861-99aa4a171e90?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDF8fGJyZWlzJTIwbWVhdCUyMHdpdGglMjBiZWVkJTIwZnJpZWRlfGVufDB8fHx8MTY1OTM3NzE0OA&ixlib=rb-4.0.3&q=80&w=400', category: 'snack'},
+            {title: 'فواكه مقطعة مجاناً', price: 0, desc: 'تشكيلة فواكه موسمية (تفاح، موز، عنب)', img: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDF8fGhlYWx0aHx8fHx8fHx8MTY1OTM3NjMxOA&ixlib=rb-4.0.3&q=80&w=400', category: 'snack'},
+            // حلويات
+            {title: 'شوربة عدس حمراء', price: 9, desc: 'عدس أحمر مطهو مع جزر وكرفس وتوابل خفيفة', img: 'https://images.unsplash.com/photo-1567620905732-2d1ec7ab744e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDF8fCBoYWxzaGF9fHx8fHx8MTY1OTM3NjMxOA&ixlib=rb-4.0.3&q=80&w=400', category: 'dessert'},
+            {title: 'شريحة لحم مشوي', price: 20, desc: 'لحم بقر مشوي مع توابل عربية، جانب من الخضار المشوي', img: 'https://images.unsplash.com/photo-1586190848861-99aa4a171e90?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDF8fGJyZWlzJTIwbWVhdCUyMHdpdGglMjBiZWVkJTIwZnJpZWRlfGVufDB8fHx8MTY1OTM3NzE0OA&ixlib=rb-4.0.3&q=80&w=400', category: 'dessert'}
+        ];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const itemsContainer = document.getElementById('itemsContainer');
+            const filterButtons = document.querySelectorAll('.filter-bar button');
+
+            // render all items initially
+            function renderItems(filter = 'all') {
+                itemsContainer.innerHTML = '';
+                const filtered = filter === 'all' ? items : items.filter(i => i.category === filter);
+                filtered.forEach(it => {
+                    const card = document.createElement('div');
+                    card.className = 'item-card';
+                    card.innerHTML = `
+                        <img src="${it.img}" alt="${it.title}">
+                        <div class="content">
+                            <h3>${it.title}</h3>
+                            <p>${it.desc}</p>
+                            <p class="price">${it.price} SAR</p>
+                        </div>
+                    `;
+                    itemsContainer.appendChild(card);
+                });
+            }
+
+            // filter handling
+            filterButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    filterButtons.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    renderItems(btn.dataset.category);
+                });
+            });
+
+            // initial render
+            renderItems();
+        });
+    </script>
+</body>
+</html>
