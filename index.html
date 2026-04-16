@@ -3,17 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>دايت سنتر – برامج غذائية احترافية</title>
+    <title>دايت سنتر – حساب، نصائح، أصناف وتواصل مع سلة تسوق</title>
     <!-- تحسين محركات البحث básicos -->
-    <meta name="description" content="دايت سنتر كسا: برامج غذائية متخصصة مثل Find Your Balance، Go Flat، Pump Up the Protein، Smart Diet مع خطط وجبات مخصصة ودعم غذائي.">
-    <meta name="keywords" content="دايت سنتر, برامج غذائية, تخسيس, كمال أجسام, كيتو, حمية, السعودية">
+    <meta name="description" content="موقع تغذية سعودي شامل: حساب مستخدم، نصائح يومية، أصناف وجبات متنوعة، أرقام تواصل ووسائل ميديا، وسلّة تسوق.">
+    <meta name="keywords" content="دايت سنتر, حساب, نصائح, أصناف, تواصل, ميديا, سلة تسوق, السعودية">
     <!-- خطوط عربية احترافية من Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- أيقونات التواصل (Font Awesome مجاني) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-xxxx" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
-        /* ===== المتغيرات العالمية – هوية بصرية هادئة ===== */
+        /* ===== المتغيرات العالمية ===== */
         :root {
-            --primary: #2e7d32;   /* أخضر هادئ مستوحى من هوية دايت سنتر */
-            --secondary: #f5a623; /* برتقالي فاتح للتسليط */
+            --primary: #2e7d32;   /* أخضر هادئ */
+            --secondary: #f5a623; /* برتقالي فاتح */
             --bg: #fafafa;
             --card: #ffffff;
             --text: #212529;
@@ -22,297 +24,481 @@
             --shadow: 0 4px 12px rgba(0,0,0,0.08);
             --transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
             --max-width: 1200px;
+            --cart-width: 340px;
         }
         /* ===== إعادة ضبط أساسية ===== */
         *, *::before, *::after { box-sizing: border-box; margin:0; padding:0; }
-        html { font-size: 16px; scroll-behavior: smooth; }
+        html { font-size:16px; scroll-behavior:smooth; }
         body {
-            font-family: 'Cairo', sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
-            line-height: 1.7;
+            font-family:'Cairo',sans-serif;
+            background-color:var(--bg);
+            color:var(--text);
+            line-height:1.7;
         }
-        a { text-decoration: none; color: inherit; }
-        img { max-width:100%; height:auto; display:block; border-radius:var(--radius); }
-        button, input, select { font-family:inherit; }
-        /* ===== ترويسة مع علامة تجارية ===== */
-        header {
-            background: var(--primary);
+        a{text-decoration:none;color:inherit;}
+        img{max-width:100%;height:auto;display:block;border-radius:var(--radius);}
+        button,input,select{font-family:inherit;cursor:pointer;border:none;}
+        /* ===== ترويسة مع سلة تسوق ===== */
+        header{
+            background:var(--primary);
             color:#fff;
-            padding:2.5rem 1rem;
-            text-align:center;
-            position:relative;
-            overflow:hidden;
-        }
-        header::before {
-            content:"";
-            position:absolute;
-            inset:0;
-            background:url('https://via.placeholder.com/1920x1080/2e7d32/ffffff?text=Diet+Center+Header') center/cover no-repeat;
-            opacity:0.12;
-            z-index:-1;
-        }
-        header h1 { font-size:2.4rem; font-weight:700; margin-bottom:.4rem; letter-spacing:-0.5px; }
-        header p { font-size:1.15rem; opacity:.92; max-width:700px; margin:0 auto 1.5rem; line-height:1.6; }
-        nav {
+            padding:1.5rem 1rem;
             display:flex;
-            justify-content:center;
-            gap:1rem;
+            justify-content:space-between;
+            align-items:center;
             flex-wrap:wrap;
-            margin-top:1rem;
+            position:relative;
         }
-        nav a {
+        header .logo{
+            display:flex;
+            align-items:center;
+            gap:.5rem;
+        }
+        header .logo h1{font-size:1.8rem;font-weight:700;margin:0;}
+        header .logo p{font-size:.9rem;opacity:.9;margin:0;}
+        header nav{
+            display:flex;
+            gap:.8rem;
+            flex-wrap:wrap;
+        }
+        header nav a{
             color:#fff;
             font-weight:600;
-            padding:.6rem 1.2rem;
+            padding:.4rem .9rem;
             border-radius:50px;
             background:rgba(255,255,255,0.15);
             transition:var(--transition);
         }
-        nav a:hover { background:rgba(255,255,255,0.25); transform:translateY(-2px); }
-        /* ===== أقسام المحتوى ===== */
-        section {
-            padding:4rem 1rem;
-            max-width:var(--max-width);
-            margin:auto;
+        header nav a:hover{background:rgba(255,255,255,0.25);transform:translateY(-2px);}
+        header .cart-icon{
+            position:relative;
+            font-size:1.5rem;
+            color:#fff;
+            cursor:pointer;
         }
-        h2 {
+        header .cart-badge{
+            position:absolute;
+            top:-8px;
+            right:-8px;
+            background:#c62828;
+            color:#fff;
+            border-radius:50%;
+            padding:2px 6px;
+            font-size:.75rem;
+            line-height:1;
+        }
+        /* ===== سلة التسوق المنبثقة ===== */
+        #cartModal{
+            display:none;
+            position:fixed;
+            inset:0;
+            background:rgba(0,0,0,.5);
+            z-index:1000;
+            align-items:center;
+            justify-content:center;
+        }
+        #cartModal.active{display:flex;}
+        #cartModal .cart-content{
+            background:var(--card);
+            color:var(--text);
+            border-radius:var(--radius);
+            width:var(--cart-width);
+            max-height:80vh;
+            overflow-y:auto;
+            position:relative;
+            padding:1.5rem;
+        }
+        #cartModal .cart-header{
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            margin-bottom:1rem;
+        }
+        #cartModal .cart-header h3{margin:0;font-size:1.3rem;color:var(--primary);}
+        #cartModal .cart-close{
+            background:none;
+            border:none;
+            font-size:1.5rem;
+            color:var(--muted);
+            cursor:pointer;
+        }
+        #cartModal .cart-item{
+            display:flex;
+            justify-content:space-between;
+            background:#f8f9fa;
+            border-radius:var(--radius);
+            padding:.8rem;
+            margin-bottom:.8rem;
+        }
+        #cartModal .cart-item-info{
+            flex:1;
+            min-width:0;
+        }
+        #cartModal .cart-item-name{font-weight:600;margin-bottom:.2rem;}
+        #cartModal .cart-item-qty{font-size:.9rem;color:var(--muted);}
+        #cartModal .cart-item-price{font-weight:600;min-width:80px;text-align:center;}
+        #cartModal .cart-item button{
+            background:#c62828;
+            color:#fff;
+            border:none;
+            padding:.25rem .5rem;
+            border-radius:4px;
+            font-size:.85rem;
+        }
+        #cartModal .cart-item button:hover{background:#b71c1c;}
+        #cartModal .cart-total{
+            margin-top:1.5rem;
+            text-align:right;
+            font-size:1.2rem;
+            font-weight:700;
+            color:var(--primary);
+        }
+        #cartModal .cart-actions{
+            margin-top:1.5rem;
+            display:flex;
+            gap:.8rem;
+        }
+        #cartModal .cart-actions button{
+            flex:1;
+            padding:.8rem;
+            border:none;
+            border-radius:var(--radius);
+            font-size:1rem;
+            font-weight:600;
+            transition:background var(--transition);
+        }
+        #cartModal .cart-actions .checkout{
+            background:var(--primary);
+            color:#fff;
+        }
+        #cartModal .cart-actions .checkout:hover{background:#1b5e2b;}
+        #cartModal .cart-actions .clear{
+            background:#e0e0e0;
+            color:var(--text);
+        }
+        #cartModal .cart-actions .clear:hover{background:#bdbdbd;}
+        /* ===== أقسام المحتوى ===== */
+        section{padding:3rem 1rem;max-width:var(--max-width);margin:auto;}
+        h2{
             font-size:2rem;
             color:var(--primary);
-            margin-bottom:2.5rem;
+            margin-bottom:2rem;
             display:flex;
             align-items:center;
             gap:.8rem;
             position:relative;
         }
-        h2::before {
+        h2::before{
             content:"";
-            width:5px;
-            height:100%;
+            width:5px;height:100%;
             background:var(--secondary);
             border-radius:2px;
         }
-        /* ===== قسم البطل (hero) ===== */
-        #hero {
-            background:linear-gradient(135deg, rgba(46,125,50,.9), rgba(245,166,35,.9)),
-                        url('https://via.placeholder.com/1600x900/2e7d32/f5a623?text=Healthy+Meals') center/cover no-repeat;
-            color:#fff;
-            text-align:center;
-            padding:9rem 1rem 7rem;
-            position:relative;
+        /* ===== قسم البطل ===== */
+        #hero{
+            background:linear-gradient(135deg,rgba(46,125,50,.9),rgba(245,166,35,.9)),
+                        url('https://via.placeholder.com/1600x900/2e7d32/f5a623?text=Healthy+Hero') center/cover no-repeat;
+            color:#fff;text-align:center;padding:9rem 1rem 7rem;position:relative;
         }
-        #hero::after {
+        #hero::after{
             content:"";
             position:absolute;
             inset:0;
-            background:radial-gradient(circle at center, transparent 0%, rgba(0,0,0,.3) 70%);
+            background:radial-gradient(circle at center,transparent 0%,rgba(0,0,0,.3)70%);
         }
-        #hero > * { position:relative; z-index:1; }
-        #hero h2 { font-size:2.8rem; margin-bottom:1.2rem; font-weight:700; }
-        #hero p { font-size:1.3rem; max-width:800px; margin:0 auto 2rem; line-height:1.8; }
-        #hero .btn {
+        #hero>*{position:relative;z-index:1;}
+        #hero h2{font-size:2.8rem;margin-bottom:1.2rem;font-weight:700;}
+        #hero p{font-size:1.3rem;max-width:800px;margin:0 auto 2rem;line-height:1.8;}
+        #hero .btn{
             display:inline-block;
-            background:#fff;
-            color:var(--primary);
-            border:none;
-            padding:1rem 2.5rem;
-            font-size:1.15rem;
-            font-weight:600;
+            background:#fff;color:var(--primary);
+            border:none;padding:1rem 2.5rem;
+            font-size:1.15rem;font-weight:600;
             border-radius:50px;
             box-shadow:0 4px 12px rgba(0,0,0,.15);
             transition:var(--transition);
         }
-        #hero .btn:hover { transform:translateY(-3px); box-shadow:0 6px 16px rgba(0,0,0,.25); }
-        /* ===== بطاقات البرامج ===== */
-        .programs-grid {
-            display:grid;
-            gap:2rem;
-            grid-template-columns:repeat(auto-fit, minmax(280px,1fr));
+        #hero .btn:hover{transform:translateY(-3px);box-shadow:0 6px 16px rgba(0,0,0,.25);}
+        /* ===== تبويبات الحساب ===== */
+        .account-tabs{
+            display:flex;
+            justify-content:center;
+            gap:.5rem;
+            margin-bottom:1.5rem;
+            flex-wrap:wrap;
         }
-        .program-card {
+        .tab{
+            background:#f8f9fa;
+            border:2px solid var(--primary);
+            color:var(--primary);
+            padding:.6rem 1.2rem;
+            border-radius:50px;
+            font-weight:600;
+            cursor:pointer;
+            transition:var(--transition);
+        }
+        .tab.active,.tab:hover{
+            background:var(--primary);
+            color:#fff;
+        }
+        .account-form{
+            display:none;
+            max-width:400px;
+            margin:0 auto 2rem;
+            background:var(--card);
+            padding:2rem;
+            border-radius:var(--radius);
+            box-shadow:var(--shadow);
+        }
+        .account-form.active{display:block;}
+        .account-form label{
+            display:block;margin-bottom:.5rem;font-weight:600;
+        }
+        .account-form input{
+            width:100%;padding:.8rem;
+            border:1px solid #ddd;
+            border-radius:var(--radius);
+            font-size:1rem;
+            margin-top:.25rem;
+            transition:border-color var(--transition);
+        }
+        .account-form input:focus{
+            outline:none;
+            border-color:var(--primary);
+            box-shadow:0 0 0 2px rgba(46,125,50,.2);
+        }
+        .account-form button{
+            width:100%;
+            background:var(--primary);
+            color:#fff;
+            padding:.9rem;
+            font-size:1rem;
+            margin-top:1rem;
+            border-radius:var(--radius);
+            transition:background var(--transition);
+        }
+        .account-form button:hover{background:#1b5e2b;}
+        /* ===== بطاقات الأصناف ===== */
+        .items-grid{
+            display:grid;
+            gap:1.8rem;
+            grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+        }
+        .item-card{
             background:var(--card);
             border-radius:var(--radius);
             box-shadow:var(--shadow);
             overflow:hidden;
             transition:var(--transition);
-            border:1px solid rgba(0,0,0,0.05);
+            border:1px solid rgba(0,0,0,0.04);
             cursor:pointer;
         }
-        .program-card:hover {
+        .item-card:hover{
             transform:translateY(-6px);
             box-shadow:0 8px 20px rgba(0,0,0,.12);
             border-color:var(--primary);
         }
-        .program-card img {
-            height:200px;
+        .item-card img{
+            height:180px;
             object-fit:cover;
             border-bottom:1px solid rgba(0,0,0,0.07);
             transition:transform var(--transition);
         }
-        .program-card:hover img { transform:scale(1.02); }
-        .program-card .content {
-            padding:1.5rem;
+        .item-card:hover img{transform:scale(1.03);}
+        .item-card .content{
+            padding:1.3rem;
             display:flex;
             flex-direction:column;
         }
-        .program-card h3 {
-            margin:0 0 .6rem;
-            font-size:1.35rem;
+        .item-card h3{
+            margin:0 0 .5rem;
+            font-size:1.3rem;
             color:var(--primary);
             display:flex;
             align-items:center;
             gap:.4rem;
         }
-        .program-card h3::before { content:"🍽️"; font-size:1.2rem; }
-        .program-card p {
-            margin:.5rem 0;
+        .item-card h3::before{content:"🍽️";font-size:1.2rem;}
+        .item-card p{
+            margin:.4rem 0;
             flex-grow:1;
-            font-size:.98rem;
+            font-size:.95rem;
             color:var(--muted);
             line-height:1.6;
         }
-        .program-card .price {
+        .item-card .price{
             font-weight:700;
-            font-size:1.2rem;
-            margin-top:1.2rem;
+            font-size:1.15rem;
+            margin-top:1rem;
             color:var(--secondary);
             display:flex;
             align-items:baseline;
             gap:.3rem;
         }
-        .program-card .price::before { content:"SAR"; font-size:.9rem; opacity:.8; }
-        .cta-btn {
+        .item-card .price::before{content:"SAR";font-size:.9rem;opacity:.8;}
+        .add-to-cart{
             width:100%;
             background:var(--primary);
             color:#fff;
             border:none;
-            padding:.9rem;
+            padding:.8rem;
             font-size:1rem;
-            margin-top:1.5rem;
+            margin-top:1rem;
             border-radius:var(--radius);
-            font-weight:600;
             transition:background var(--transition);
         }
-        .cta-btn:hover { background:#1b5e2b; }
-        /* ===== قسم المميزات ===== */
-        .features {
-            display:grid;
-            gap:1.5rem;
-            grid-template-columns:repeat(auto-fit, minmax(260px,1fr));
-            margin-top:2rem;
-        }
-        .feature {
-            background:var(--card);
-            border-radius:var(--radius);
-            box-shadow:var(--shadow);
+        .add-to-cart:hover{background:#1b5e2b;}
+        /* ===== نصائح اليومية ===== */
+        #tips{
+            background:#fff8f0;
+            border-left:4px solid var(--secondary);
             padding:1.5rem;
-            text-align:center;
+            margin:2rem 0;
+            border-radius:0 var(--radius) var(--radius) 0;
+            font-size:1.05rem;
+            color:#856404;
+            min-height:3rem;
         }
-        .feature i { font-size:2.2rem; color:var(--primary); margin-bottom:.8rem; }
-        .feature h3 { margin:0 0 .5rem; font-size:1.2rem; color:var(--primary); }
-        .feature p { font-size:.95rem; color:var(--muted); }
-        /* ===== قسم اتصل بنا ===== */
-        #contact {
+        /* ===== قسم التواصل ===== */
+        #contact{
             background:#f8f9fa;
             border-radius:var(--radius);
-            padding:2.5rem;
+            padding:2rem;
             text-align:center;
         }
-        #contact p { margin:.9rem 0; font-size:1.15rem; }
-        #phone-display {
-            font-weight:700;
-            color:var(--primary);
-            font-size:1.4rem;
-            word-break:break-all;
+        #contact h2{margin-bottom:1rem;}
+        #contact p{margin:.6rem 0;font-size:1.1rem;}
+        #contact .phones{font-weight:700;color:var(--primary);font-size:1.2rem;margin:.4rem 0;}
+        #contact .social{
+            display:flex;
+            justify-content:center;
+            gap:1rem;
+            margin-top:1.5rem;
         }
+        #contact .social a{
+            color:#fff;
+            background:var(--primary);
+            width:45px;height:45px;
+            display:inline-flex;
+            align-items:center;
+            justify-content:center;
+            border-radius:50%;
+            font-size:1.3rem;
+            transition:background var(--transition);
+        }
+        #contact .social a:hover{background:#1b5e2b;}
         /* ===== تذييل ===== */
-        footer {
+        footer{
             text-align:center;
-            padding:2.5rem 1rem;
+            padding:2rem 1rem;
             background:var(--primary);
             color:#fff;
             font-size:.9rem;
         }
-        footer small { display:block; margin-top:.8rem; opacity:.85; }
-        /* ===== استجابة ممتازة ===== */
-        @media (max-width:768px) {
-            header h1 { font-size:2rem; }
-            #hero { padding:7rem 1rem 5rem; }
-            #hero h2 { font-size:2.4rem; }
-            section { padding:3rem .8rem; }
-            h2 { font-size:1.7rem; }
+        footer small{display:block;margin-top:.8rem;opacity:.85;}
+        /* ===== استجابة ===== */
+        @media(max-width:768px){
+            header{flex-direction:column;align-items:flex-start;gap:1rem;}
+            header .logo{font-size:1.6rem;}
+            header nav{justify-content:flex-start;width:100%;}
+            #hero{padding:7rem 1rem 5rem;}
+            #hero h2{font-size:2.4rem;}
+            section{padding:2.5rem .8rem;}
+            h2{font-size:1.7rem;}
         }
-        @media (max-width:480px) {
-            nav { flex-direction:column; gap:.5rem; }
-            nav a { width:100%; text-align:center; padding:.8rem; }
+        @media(max-width:480px){
+            nav{flex-direction:column;gap:.5rem;width:100%;}
+            nav a{width:100%;text-align:center;padding:.8rem;}
         }
     </style>
 </head>
 <body>
-    <!-- ===== ترويسة ===== -->
+    <!-- ===== ترويسة مع سلة تسوق ===== -->
     <header>
-        <h1>دايت سنتر</h1>
-        <p>برامج غذائية متخصصة تُحقق أهدافك الصحية وتوازن تغذيتك اليومية</p>
+        <div class="logo">
+            <h1>دايت سنتر</h1>
+            <p>صحتك، هدفنا</p>
+        </div>
         <nav>
-            <a href="#home">الرئيسية</a>
-            <a href="#programs">البرامج</a>
-            <a href="#features">المميزات</a>
-            <a href="#contact">اتصل بنا</a>
+            <a href="#account">الحساب</a>
+            <a href="#items">الأصناف</a>
+            <a href="#tips">نصائح</a>
+            <a href="#contact">تواصل</a>
         </nav>
+        <div class="cart-icon" id="cartIcon">
+            <i class="fas fa-shopping-cart"></i>
+            <span class="cart-badge" id="cartBadge">0</span>
+        </div>
     </header>
 
-    <!-- ===== قسم البطل ===== -->
-    <section id="hero">
-        <h2>صحتك، أولويتنا</h2>
-        <p>اختر البرنامج المناسب لك من بين خيارات متنوعة تشمل التخسيس، بناء العضلات، والحميات المتخصصة مثل الكيتو.</p>
-        <a href="#programs" class="btn">استعرض البرامج الآن</a>
-    </section>
-
-    <!-- ===== الصفحة الرئيسية ===== -->
-    <section id="home">
-        <h2>مرحبًا بك في دايت سنتر</h2>
-        <p>نقدّم لك برامج غذائية مصممة بعناية من قبل أخصائيي تغذية، مع وجبات طازجة تُوصَّل إلى بابك، وخيارات اشتراك مرنّة تناسب نمط حياتك.</p>
-    </section>
-
-    <!-- ===== برامج دايت سنتر ===== -->
-    <section id="programs">
-        <h2>برامجنا الغذائية</h2>
-        <div class="programs-grid" id="programsContainer"></div>
-    </section>
-
-    <!-- ===== المميزات ===== -->
-    <section id="features">
-        <h2>لماذا تختار دايت سنتر؟</h2>
-        <div class="features">
-            <div class="feature">
-                <i>🥗</i>
-                <h3>وجبات طازجة ومتوازنة</h3>
-                <p>تُحضّر يومياً من مكونات عالية الجودة وتتوافق مع أهدافك الغذائية.</p>
+    <!-- ===== سلة التسوق المنبثقة ===== -->
+    <div id="cartModal">
+        <div class="cart-content">
+            <div class="cart-header">
+                <h3>سلة التسوق</h3>
+                <button class="cart-close" id="cartClose">&times;</button>
             </div>
-            <div class="feature">
-                <i>📊</i>
-                <h3>تغذية مخصصة</h3>
-                <p>كل برنامج يُصمَّم وفق احتياجاتك الفردية بعد تقييم غذائي أولي.</p>
-            </div>
-            <div class="feature">
-                <i>🚚</i>
-                <h3>توصيل موثوق</h3>
-                <p>توصيل سريع إلى جميع مدن السعودية مع إمكانية الاستلام من الفروع.</p>
-            </div>
-            <div class="feature">
-                <i>💬</i>
-                <h3>دعم أخصائيين</h3>
-                <p>استشارة مستمرة مع أخصائيي تغذية لتعديل الخطة حسب التقدم.</p>
+            <div id="cartItems"></div>
+            <div class="cart-total" id="cartTotal">الإجمالي: 0.00 SAR</div>
+            <div class="cart-actions">
+                <button class="clear" id="cartClear">مسح السلة</button>
+                <button class="checkout" id="cartCheckout">الدفع</button>
             </div>
         </div>
+    </div>
+
+    <!-- ===== قسم الحساب ===== -->
+    <section id="account">
+        <h2>حسابك الشخصي</h2>
+        <div class="account-tabs">
+            <button class="tab active" data-tab="login">تسجيل الدخول</button>
+            <button class="tab" data-tab="register">إنشاء حساب</button>
+        </div>
+
+        <!-- نموذج تسجيل الدخول -->
+        <form class="account-form active" id="loginForm">
+            <label>البريد الإلكتروني:<input type="email" id="loginEmail" placeholder="example@mail.com" required></label>
+            <label>كلمة المرور:<input type="password" id="loginPass" placeholder="••••••••" required></label>
+            <button type="submit">دخول</button>
+            <p style="margin-top:.8rem;font-size:.9rem;color:var(--muted);">ليس لديك حساب؟ انقر على “إنشاء حساب” أعلاه.</p>
+        </form>
+
+        <!-- نموذج إنشاء حساب -->
+        <form class="account-form" id="registerForm">
+            <label>الاسم الكامل:<input type="text" id="regName" placeholder="اسمك الكامل" required></label>
+            <label>البريد الإلكتروني:<input type="email" id="regEmail" placeholder="example@mail.com" required></label>
+            <label>كلمة المرور:<input type="password" id="regPass" placeholder="••••••••" required></label>
+            <label>تأكيد كلمة المرور:<input type="password" id="regPass2" placeholder="••••••••" required></label>
+            <button type="submit">إنشاء الحساب</button>
+            <p style="margin-top:.8rem;font-size:.9rem;color:var(--muted);">بالضغط على زر الإ creation، أنت توافق على شروط الاستخدام وسياسة الخصوصية.</p>
+        </form>
     </section>
 
-    <!-- ===== اتصل بنا ===== -->
+    <!-- ===== قسم الأصناف (وجبات/برامج) ===== -->
+    <section id="items">
+        <h2>أصنافنا المتنوعة</h2>
+        <div class="items-grid" id="itemsContainer"></div>
+    </section>
+
+    <!-- ===== قسم النصائح اليومية ===== -->
+    <section id="tips">
+        <h2>نصيحة اليوم</h2>
+        <div id="tipsContent">جارٍ التحميل...</div>
+    </section>
+
+    <!-- ===== قسم التواصل ===== -->
     <section id="contact">
-        <h2>اتصل بنا</h2>
-        <p>لأي استفسارات أو لحجز استشارة غذائية، فريقنا جاهز للمساعدة.</p>
-        <p>📞 <span id="phone-display">جاري التحميل...</span></p>
+        <h2>تواصل معنا</h2>
+        <p>لأي استفسارات أو لحجز استشارة غذائية، فريقنا جاهز للمساعدة عبر قنوات متعددة:</p>
+        <p class="phones">📞 9200 17373 • 9200 05555 • 800 124 0000</p>
         <p>✉️ <a href="mailto:info@dietcenter.com.sa">info@dietcenter.com.sa</a></p>
+        <div class="social">
+            <a href="https://facebook.com/dietcenterksa" target="_blank" rel="noopener"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://twitter.com/dietcenterksa" target="_blank" rel="noopener"><i class="fab fa-twitter"></i></a>
+            <a href="https://instagram.com/dietcenterksa" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
+            <a href="https://snapchat.com/add/dietcenterksa" target="_blank" rel="noopener"><i class="fab fa-snapchat-ghost"></i></a>
+            <a href="https://wa.me/966920017373" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a>
+        </div>
     </section>
 
     <footer>
@@ -322,60 +508,181 @@
 
     <!-- ===== جافا سكريبت مدمج ===== -->
     <script>
-        /* ====== إعدادات سهلة التعديل ====== */
-        const phoneNumber = "+966 9200 17373";   // رقم الموحد الموضح في موقع دايت سنتر[web:20][web:121]
+        /* ====== إعدادات الحساب (تبويبات) ====== */
+        const tabs = document.querySelectorAll('.account-tabs .tab');
+        const forms = document.querySelectorAll('.account-form');
 
-        /* ====== بيانات البرامج – مبنية على محتوى موقع دايت سنتر ====== */
-        const programs = [
-            {
-                title: "Find Your Balance Full Day",
-                description: "برنامج متكامل يشمل 3 وجبات رئيسية، 2 سلطة أو شوربة، و2 وجبة خفيفة يومياً، يضمن حوالي 1500 سعر حراري ويساعد على الحفاظ على وزن صحي.", // مستوحى من وصف البرنامج[web:117]
-                price: 350, // SAR شهرياً (تقديري)
-                img: 'https://images.unsplash.com/photo-1546069901-296d410bde3e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDF8fGx1bmNoJTIwd2l0aCUyMGFycmlvfGVufDB8fHx8MTY1OTM3NjM0NQ&ixlib=rb-4.0.3&q=80&w=400' // غداء متوازن
-            },
-            {
-                title: "Go Flat – 20 Day Plan",
-                description: "برنامج مخصص لتقليل دهون البطن باستخدام الدهون الأحادية غير المشبعة (MUFA) لتشعُّر بالشبع وفقدان الوزن خلال 20 يوم.", // مستوحى من وصف البرنامج[web:119]
-                price: 280,
-                img: 'https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDF8fHNlbW9uJTIwZmlzaHxlbnwwfHx8fDE2NTkzNzYzNDg&ixlib=rb-4.0.3&q=80&w=400' // سمك سلمون
-            },
-            {
-                title: "Pump Up the Protein Full Day",
-                description: "برنامج غني بالبروتين عالي الجودة والكربوهيدرات المعقدة لدعم نمو العضلات وتحسين الأداء الرياضي.", // مستوحى من وصف البرنامج[web:125]
-                price: 380,
-                img: 'https://images.unsplash.com/photo-1586190848861-99aa4a171e90?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDF8fGJyZWlzJTIwbWVhdCUyMHdpdGglMjBiZWVkJTIwZnJpZWRlfGVufDB8fHx8MTY1OTM3NzE0OA&ixlib=rb-4.0.3&q=80&w=400' // لحم بقر مشوي
-            },
-            {
-                title: "Smart Diet Plan",
-                description: "برنامج متكامل يدمج بين控制 السعرات والتغذية المتوازنة مع مرونة في اختيار الوجبات según الحاجة اليومية.", // ملخص عام لبرنامج Smart Diet المذكور في الوصف[web:120]
-                price: 320,
-                img: 'https://images.unsplash.com/photo-1550583724-b2692b85b150?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDF8fGJyZWFzdCUyMGJyZWFrZmFzdHxlbnwwfHx8fDE2NTkzNzYzNTM&ixlib=rb-4.0.3&q=80&w=400' // شوفان مع موز
-            }
-        ];
-
-        document.addEventListener('DOMContentLoaded', () => {
-            const phoneDisplay = document.getElementById('phone-display');
-            const programsContainer = document.getElementById('programsContainer');
-
-            // عرض رقم الاتصال
-            phoneDisplay.textContent = phoneNumber;
-
-            // توليد بطاقات البرامج
-            programs.forEach(prog => {
-                const card = document.createElement('div');
-                card.className = 'program-card';
-                card.innerHTML = `
-                    <img src="${prog.img}" alt="${prog.title}">
-                    <div class="content">
-                        <h3>${prog.title}</h3>
-                        <p>${prog.description}</p>
-                        <p class="price">${prog.price} SAR / شهر</p>
-                        <button class="cta-btn">اختر البرنامج</button>
-                    </div>
-                `;
-                programsContainer.appendChild(card);
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                const target = tab.dataset.tab;
+                forms.forEach(f => {
+                    f.classList.toggle('active', f.id === target + 'Form');
+                });
             });
         });
+
+        /* ====== بيانات الأصناف (وجبات متنوعة) ====== */
+        const items = [
+            {title: 'وجبة إفطار خفيفة', calories: 295, price: 12, desc: 'بيض مسلوق + خضروات + شريحة توست أسمر + ثمرة فاكهة', img: 'https://images.unsplash.com/photo-1582722662480-41f3abb39b53?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDF8fGJyZWFkZmFzdHxlbnwwfHx8fDE2NTkzNzYzNDQ&ixlib=rb-4.0.3&q=80&w=400'},
+            {title: 'وجبة غداء متوازنة', calories: 440, price: 18, desc: 'صدور دجاج مشوية + أرز بني + سلطة فوشول مع ليمون وزيت زيتون', img: 'https://images.unsplash.com/photo-1546069901-296d410bde3e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDF8fGx1bmNoJTIwd2l0aCUyMGFycmlvfGVufDB8fHx8MTY1OTM3NjM0NQ&ixlib=rb-4.0.3&q=80&w=400'},
+            {title: 'وجبة عشاء خفيف', calories: 230, price: 15, desc: 'سمك السلمون المشوي + بخار خضروات + سلطة خضراء', img: 'https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDF8fHNlbW9uJTIwZmlzaHxlbnwwfHx8fDE2NTkzNzYzNDg&ixlib=rb-4.0.3&q=80&w=400'},
+            {title: 'وجبة إفطار للطاقة', calories: 520, price: 14, desc: 'شوفان كامل + موز + زبدة فول سوداني طبيعي + حليب كامل + مكسرات', img: 'https://images.unsplash.com/photo-1550583724-b2692b85b150?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDF8fGJyZWFzdCUyMGJyZWFrZmFzdHxlbnwwfHx8fDE2NTkzNzYzNTM&ixlib=rb-4.0.3&q=80&w=400'},
+            {title: 'وجبة غداء للطاقة', calories: 660, price: 22, desc: 'لحم بقر مشوي + بطاطا حلوة مشوية + بروكلي + سلاطة', img: 'https://images.unsplash.com/photo-1586190848861-99aa4a171e90?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDF8fGJyZWlzJTIwbWVhdCUyMHdpdGglMjBiZWVkJTIwZnJpZWRlfGVufDB8fHx8MTY1OTM3NzE0OA&ixlib=rb-4.0.3&q=80&w=400'},
+            {title: 'وجبة عشاء للطاقة', calories: 410, price: 16, desc: 'دجاج التندوري + أرز بشعير + عدس أحمر + سلطة', img: 'https://images.unsplash.com/photo-1600891964599-461b1d316f0c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDF8fHRpYWtlJTIwYW5kJTIwYXJheiUyMkRyYWlzfGVufDB8fHx8MTY1OTM3NzE1OA&ixlib=rb-4.0.3&q=80&w=400'},
+            {title: 'سلطة اليونان', calories: 180, price: 10, desc: 'خيار، طماطم، بصل أحمر، زيتون أسود، جبنة فيتا، زيت زيتون', img: 'https://images.unsplash.com/photo-1550907576-3b4449efef7a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDF8fGhlYWx0aHx8fHx8fHx8MTY1OTM3NjMwNQ&ixlib=rb-4.0.3&q=80&w=400'},
+            {title: 'وعاء حمص بالطحينة', calories: 210, price: 11, desc: 'حمص منزلي مع طحينة، عصير ليمون، ثوم، وزيت زيتون', img: 'https://images.unsplash.com/photo-1567620905732-2d1ec7ab744e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDF8fCBoYWxzaGF9fHx8fHx8MTY1OTM3NjMxOA&ixlib=rb-4.0.3&q=80&w=400'},
+            {title: 'شريحة لحم مشوي', calories: 350, price: 20, desc: 'لحم بقر مشوي مع توابل عربية، جانب من الخضار المشوي', img: 'https://images.unsplash.com/photo-1586190848861-99aa4a171e90?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDF8fGJyZWlzJTIwbWVhdCUyMHdpdGglMjBiZWVkJTIwZnJpZWRlfGVufDB8fHx8MTY1OTM3NzE0OA&ixlib=rb-4.0.3&q=80&w=400'},
+            {title: 'شوربة عدس حمراء', calories: 160, price: 9, desc: 'عدس أحمر مطهو مع جزر وكرفس وتوابل خفيفة', img: 'https://images.unsplash.com/photo-1567620905732-2d1ec7ab744e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDF8fCBoYWxzaGF9fHx8fHx8MTY1OTM3NjMxOA&ixlib=rb-4.0.3&q=80&w=400'}
+        ];
+
+        /* ====== سلة التسوق ====== */
+        let cart = []; // كل عنصر: {item, qty}
+
+        const cartBadge = document.getElementById('cartBadge');
+        const cartModal = document.getElementById('cartModal');
+        const cartIcon = document.getElementById('cartIcon');
+        const cartClose = document.getElementById('cartClose');
+        const cartItemsDiv = document.getElementById('cartItems');
+        const cartTotalDiv = document.getElementById('cartTotal');
+        const cartClearBtn = document.getElementById('cartClear');
+        const cartCheckoutBtn = document.getElementById('cartCheckout');
+
+        // فتح/إغلاق السلة
+        cartIcon.addEventListener('click', () => {
+            cartModal.classList.add('active');
+            renderCart();
+        });
+        cartClose.addEventListener('click', () => {
+            cartModal.classList.remove('active');
+        });
+        // إغلاق بالنقر خارج المحتوى
+        cartModal.addEventListener('click', e => {
+            if (e.target === cartModal) cartModal.classList.remove('active');
+        });
+
+        // مسح السلة
+        cartClearBtn.addEventListener('click', () => {
+            cart = [];
+            renderCart();
+        });
+        // دفع (نموذج تجريبي)
+        cartCheckoutBtn.addEventListener('click', () => {
+            if (cart.length === 0) {
+                alert('السلة فارغة');
+                return;
+            }
+            alert('سيتم توجيهك إلى صفحة الدفع (نموذج تجريبي).');
+            // في تطبيق حقيقي: استدعاء خلفية Stripe أو مشابه
+        });
+
+        // تحديث عداد السلة
+        function updateCartBadge() {
+            const totalQty = cart.reduce((sum, {qty}) => sum + qty, 0);
+            cartBadge.textContent = totalQty;
+        }
+
+        // عرض محتويات السلة
+        function renderCart() {
+            cartItemsDiv.innerHTML = '';
+            let total = 0;
+            if (cart.length === 0) {
+                cartItemsDiv.innerHTML = '<p style="text-align:center;color:var(--muted);">السلة فارغة</p>';
+            } else {
+                cart.forEach(({item, qty}, index) => {
+                    const div = document.createElement('div');
+                    div.className = 'cart-item';
+                    div.innerHTML = `
+                        <div class="cart-item-info">
+                            <div class="cart-item-name">${item.title}</div>
+                            <div class="cart-item-qty">× ${qty}</div>
+                        </div>
+                        <div class="cart-item-price">${(item.price * qty).toFixed(2)} SAR</div>
+                        <button class="remove" data-index="${index}">حذف</button>
+                    `;
+                    cartItemsDiv.appendChild(div);
+                    total += item.price * qty;
+                });
+            }
+            cartTotalDiv.textContent = `الإجمالي: ${total.toFixed(2)} SAR`;
+            updateCartBadge();
+
+            // مستمعين أزرار الحذف
+            document.querySelectorAll('#cartItems .remove').forEach(btn => {
+                btn.addEventListener('click', e => {
+                    const idx = parseInt(e.target.dataset.index);
+                    cart.splice(idx, 1);
+                    renderCart();
+                });
+            });
+        }
+
+        /* ====== إضافة عنصر للسلة ====== */
+        function addToCart(item) {
+            const existing = cart.find(i => i.item.title === item.title);
+            if (existing) {
+                existing.qty += 1;
+            } else {
+                cart.push({item, qty: 1});
+            }
+            renderCart();
+        }
+
+        /* ====== توليد بطاقات الأصناف ====== */
+        document.addEventListener('DOMContentLoaded', () => {
+            const itemsContainer = document.getElementById('itemsContainer');
+            items.forEach(it => {
+                const card = document.createElement('div');
+                card.className = 'item-card';
+                card.innerHTML = `
+                    <img src="${it.img}" alt="${it.title}">
+                    <div class="content">
+                        <h3>${it.title}</h3>
+                        <p>${it.desc}</p>
+                        <p class="price">${it.price} SAR</p>
+                        <button class="add-to-cart">إضافة للسلال</button>
+                    </div>
+                `;
+                itemsContainer.appendChild(card);
+            });
+
+            // مستمعات أزرار "إضافة للسلال"
+            document.querySelectorAll('.item-card .add-to-cart').forEach(btn => {
+                btn.addEventListener('click', e => {
+                    const card = e.target.closest('.item-card');
+                    const img = card.querySelector('img');
+                    const title = card.querySelector('h3').textContent;
+                    const price = parseFloat(card.querySelector('.price').textContent.replace('SAR','').trim());
+                    const desc = card.querySelector('p').textContent;
+                    // العثور على الكائن الكامل من المصفوفة
+                    const item = items.find(i => i.title === title && i.price === price && i.desc === desc);
+                    if (item) addToCart(item);
+                });
+            });
+        });
+
+        /* ====== نصائح يومية – يتغيّر كل 10 ثوانٍ ====== */
+        const tips = [
+            "اشرب كوباً من الماء الدافئ مع ليمون على الريق لتنشيط الهضم وتعزيز المناعة.",
+            "تناول وجبة خفيفة تحتوي على بروتين قبل التمرين بـ 30 دقيقة لتحسين الأداء والحفاظ على العضلات.",
+            "اجعل نصف طبقك من الخضروات المتنوعة اللون للحصول على طيف واسع من الفيتامينات والمعادن.",
+            "امضغ طعامك ببطء (>20 مضغة لكل لقمة) لتحسين الهضم وتقليل الإفراط في الأكل.",
+            "احصل على 7-8 ساعات من النوم الجيد – النوم غير الكافي يزيد هرمون الجوع (ghrelin).",
+            "استبدل المشروبات الغازية بالماء أو الشاي الأخضر غير المحلّى لتقليل السعرات الفارغة.",
+            "أضف ملعقة صغيرة من القرفة إلى شوفانك الصباحي لتنظيم مستويات السكر في الدم.",
+            "تأكد من تناول مصدر للدهون الصحية يومياً (مثل زيت الزيتون، المكسرات، الأفوكادو) لامتصاص الفيتامينات الذائبة في الدهون.",
+            "حدد مواعيد ثابتة لتناول الطعام؛ الانتظام يساعد على استقرار مستويات السكر والإنسولين.",
+            "احرص على تنويع مصادر البروتين: البقوليات، الأسماك، الدواجن، واللحم الأحمر الخالي من الدهون."
+        ];
+        const tipEl = document.getElementById('tipsContent');
+        let tipIdx = 0;
+        function showTip() {
+            tipEl.textContent = tips[tipIdx];
+            tipIdx = (tipIdx + 1) % tips.length;
+        }
+        showTip();
+        setInterval(showTip, 10000); // كل 10 ثوانٍ
     </script>
 </body>
 </html>
