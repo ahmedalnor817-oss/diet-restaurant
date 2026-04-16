@@ -1,91 +1,105 @@
 const MY_PHONE = "966563683212";
 
-// قاعدة البيانات الموسعة
-const menu = {
-    offers: [
-        { name: "باقة البركة الأسبوعية", price: "450", desc: "6 وجبات غداء + سلطات (توفير 15%)", emoji: "🎁" }
+// قاعدة بيانات شاملة (الوجبات، السناكات، المشروبات)
+const menuData = {
+    "أطباق رئيسية 🔥": [
+        { id: 1, name: "سلمون إيليت المشوي", price: 65, cal: 420, img: "https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=500" },
+        { id: 2, name: "دجاج كينوا بيري", price: 48, cal: 360, img: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500" },
+        { id: 3, name: "ستيك لحم واغيو", price: 85, cal: 510, img: "https://images.unsplash.com/photo-1600891964599-f61ba0e24092?w=500" }
     ],
-    mainMeals: [
-        { name: "سلمون إيليت المشوي", price: 65, cal: 420, img: "https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=500", tag: "الأكثر طلباً" },
-        { name: "ستيك لحم بقر واغيو لايت", price: 85, cal: 510, img: "https://images.unsplash.com/photo-1600891964599-f61ba0e24092?w=500", tag: "جديد" },
-        { name: "دجاج كينوا بيري", price: 48, cal: 360, img: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500", tag: "صحي" },
-        { name: "روبيان مشوي بالكاري", price: 75, cal: 310, img: "https://images.unsplash.com/photo-1551248429-40975aa4de74?w=500", tag: "بحري" }
+    "سناكات صحية 🥗": [
+        { id: 4, name: "سلطة كينوا بالأفوكادو", price: 35, cal: 210, img: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=500" },
+        { id: 5, name: "ترافل بروتين بالتمر", price: 25, cal: 150, img: "https://images.unsplash.com/photo-1506084868730-3424e9339e05?w=500" }
     ],
-    breakfast: [
-        { name: "أومليت بياض البيض والسبانخ", price: 28, cal: 180, img: "https://images.unsplash.com/photo-1525351484163-7529414344d8?w=500", tag: "فطور" },
-        { name: "بينك بانكيك بروتين", price: 35, cal: 290, img: "https://images.unsplash.com/photo-1506084868730-3424e9339e05?w=500", tag: "طاقة" }
+    "مشروبات طاقة 🥤": [
+        { id: 6, name: "عصير أخضر ديتوكس", price: 22, cal: 85, img: "https://images.unsplash.com/photo-1610970882799-64a0de9325ed?w=500" },
+        { id: 7, name: "سموذي بروتين موز", price: 28, cal: 240, img: "https://images.unsplash.com/photo-1550583724-b2692b85b150?w=500" }
     ]
 };
+
+let cart = [];
 
 function initApp() {
     const container = document.getElementById('meals-list');
     if (!container) return;
 
-    let html = `
-    <div style="background: #0a0a0a; color: #fff; font-family: 'Cairo', sans-serif; min-height: 100vh; direction: rtl;">
-        
-        <header style="padding: 25px; text-align: center; border-bottom: 1px solid #222;">
-            <h1 style="color: #f1c40f; margin: 0; font-size: 28px; letter-spacing: 2px;">FITFUEL <span style="color:#fff">ELITE</span></h1>
-            <p style="color: #888; font-size: 12px; margin-top: 5px;">📍 الرياض | توصيل يومي طازج</p>
-        </header>
-
-        <div style="margin: 15px; border-radius: 25px; overflow: hidden; position: relative; height: 180px;">
-            <img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=800" style="width:100%; height:100%; object-fit:cover; opacity:0.5;">
-            <div style="position: absolute; bottom: 20px; right: 20px;">
-                <h2 style="font-size: 24px; margin: 0;">نصمم أسلوب حياة</h2>
-                <p style="color: #f1c40f; margin: 5px 0 0 0;">قائمة رمضان المتوفرة الآن ✨</p>
-            </div>
-        </div>
-
-        <div style="padding: 0 15px;">
-            <h3 style="color: #f1c40f; border-right: 4px solid #f1c40f; padding-right: 10px;">عروض التوفير 💎</h3>
-            ${menu.offers.map(off => `
-                <div style="background: linear-gradient(45deg, #1a1a1a, #2c3e50); padding: 15px; border-radius: 15px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #333;">
-                    <div>
-                        <h4 style="margin:0">${off.emoji} ${off.name}</h4>
-                        <small style="color:#aaa">${off.desc}</small>
-                    </div>
-                    <a href="https://wa.me/${MY_PHONE}?text=مهتم بعرض: ${off.name}" style="background:#f1c40f; color:#000; padding: 8px 15px; border-radius: 10px; text-decoration: none; font-weight: bold; font-size: 12px;">اشترك</a>
-                </div>
-            `).join('')}
-        </div>
-
-        ${renderSection("الأطباق الرئيسية 🔥", menu.mainMeals)}
-        ${renderSection("الفطور الصحي ☕", menu.breakfast)}
-
-        <footer style="text-align: center; padding: 40px; color: #444;">
-            <p>جميع الحقوق محفوظة لـ FITFUEL ELITE 2026</p>
-        </footer>
-    </div>
-    `;
-
-    container.innerHTML = html;
+    renderUI(container);
+    updateCartUI();
 }
 
-function renderSection(title, items) {
-    return `
-    <div style="padding: 10px 15px;">
-        <h3 style="color: #fff; border-right: 4px solid #fff; padding-right: 10px; margin-top: 30px;">${title}</h3>
-        <div style="display: grid; grid-template-columns: 1fr; gap: 20px;">
-            ${items.map(item => `
-                <div style="background: #151515; border-radius: 20px; overflow: hidden; border: 1px solid #222;">
-                    <div style="position: relative;">
-                        <img src="${item.img}" style="width: 100%; height: 200px; object-fit: cover;">
-                        <span style="position: absolute; top: 10px; left: 10px; background: #f1c40f; color: #000; padding: 4px 12px; border-radius: 20px; font-size: 10px; font-weight: bold;">${item.tag}</span>
-                    </div>
-                    <div style="padding: 15px;">
-                        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-                            <h4 style="margin: 0; font-size: 18px;">${item.name}</h4>
-                            <span style="color: #f1c40f; font-weight: bold; font-size: 18px;">${item.price} <small>ريال</small></span>
+function renderUI(container) {
+    let sectionsHtml = "";
+    for (let category in menuData) {
+        sectionsHtml += `
+            <h3 style="color: #f1c40f; padding: 20px 20px 5px; margin: 0; font-size: 22px;">${category}</h3>
+            <div style="display: flex; overflow-x: auto; padding: 10px; gap: 15px; scrollbar-width: none;">
+                ${menuData[category].map(item => `
+                    <div style="min-width: 200px; background: #1a1a1a; border-radius: 20px; overflow: hidden; border: 1px solid #333;">
+                        <img src="${item.img}" style="width: 100%; height: 140px; object-fit: cover;">
+                        <div style="padding: 12px; text-align: right;">
+                            <h4 style="margin: 0; color: #fff; font-size: 16px;">${item.name}</h4>
+                            <p style="color: #f1c40f; font-weight: bold; margin: 5px 0;">${item.price} ريال</p>
+                            <button onclick="addToCart(${item.id}, '${item.name}', ${item.price})" style="width: 100%; background: #fff; border: none; padding: 8px; border-radius: 10px; font-weight: bold; cursor: pointer;">إضافة +</button>
                         </div>
-                        <p style="color: #888; font-size: 12px; margin: 10px 0;">السعرات: ${item.cal} سعرة حرارية</p>
-                        <a href="https://wa.me/${MY_PHONE}?text=أريد طلب: ${item.name}" style="display: block; background: #fff; color: #000; text-align: center; padding: 10px; border-radius: 10px; text-decoration: none; font-weight: bold; transition: 0.3s;">اطلب عبر الواتساب</a>
                     </div>
-                </div>
-            `).join('')}
+                `).join('')}
+            </div>
+        `;
+    }
+
+    container.innerHTML = `
+        <div style="background: #000; color: #fff; font-family: 'Cairo', sans-serif; min-height: 100vh; padding-bottom: 100px; direction: rtl;">
+            <header style="padding: 30px 20px; text-align: center; background: linear-gradient(to bottom, #111, #000);">
+                <h1 style="color: #f1c40f; margin: 0; letter-spacing: 2px;">FITFUEL <span style="color:#fff">ELITE</span></h1>
+                <p style="color: #666; font-size: 12px;">نصمم أسلوب حياة صحي ومبتكر</p>
+            </header>
+            ${sectionsHtml}
+            
+            <div id="cart-bar" style="position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 400px; background: #f1c40f; color: #000; padding: 15px; border-radius: 20px; display: none; justify-content: space-between; align-items: center; box-shadow: 0 10px 30px rgba(0,0,0,0.5); z-index: 1000;">
+                <div id="cart-info" style="font-weight: bold;">0 أصناف | 0 ريال</div>
+                <button onclick="sendOrder()" style="background: #000; color: #fff; border: none; padding: 10px 20px; border-radius: 12px; font-weight: bold; cursor: pointer;">إتمام الطلب 🛒</button>
+            </div>
         </div>
-    </div>
     `;
+}
+
+function addToCart(id, name, price) {
+    cart.push({ id, name, price });
+    updateCartUI();
+    // تأثير بسيط عند الإضافة
+    const btn = event.target;
+    btn.innerText = "تم ✅";
+    btn.style.background = "#27ae60";
+    btn.style.color = "#fff";
+    setTimeout(() => {
+        btn.innerText = "إضافة +";
+        btn.style.background = "#fff";
+        btn.style.color = "#000";
+    }, 800);
+}
+
+function updateCartUI() {
+    const cartBar = document.getElementById('cart-bar');
+    const cartInfo = document.getElementById('cart-info');
+    if (cart.length > 0) {
+        cartBar.style.display = "flex";
+        const total = cart.reduce((sum, item) => sum + item.price, 0);
+        cartInfo.innerText = `${cart.length} وجبات | ${total} ريال`;
+    } else {
+        cartBar.style.display = "none";
+    }
+}
+
+function sendOrder() {
+    const total = cart.reduce((sum, item) => sum + item.price, 0);
+    let orderText = "طلب جديد من FITFUEL ELITE:\n\n";
+    cart.forEach((item, index) => {
+        orderText += `${index + 1}- ${item.name} (${item.price} ريال)\n`;
+    });
+    orderText += `\nالمجموع النهائي: ${total} ريال`;
+    
+    const whatsappUrl = `https://wa.me/${MY_PHONE}?text=${encodeURIComponent(orderText)}`;
+    window.open(whatsappUrl, '_blank');
 }
 
 window.onload = initApp;
