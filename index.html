@@ -1,316 +1,264 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>دايت سنتر – أصناف غذائية حصريّة</title>
-    <meta name="description" content="موقع تغذية سعودي حصري يعرض تشكيلة واسعة من الأصناف الغذائية مع صور احترافية وتجربة سهلة الاستخدام.">
-    <meta name="keywords" content="دايت سنتر, أصناف, تغذية, صور, السعودية, حصري, سهل">
-    <!-- خطوط عربية احترافية -->
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
-    <!-- أيقونات (Font Awesome) – اختيارية لتجربة أفضل -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-xxxx" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <style>
-        /* ===== المتغيرات العالمية ===== */
-        :root {
-            --primary: #2e7d32;   /* أخضر هادئ مستوحى من دايت سنتر */
-            --secondary: #f5a623; /* برتقالي فاتح للتسليط */
-            --bg: #fafafa;
-            --card: #ffffff;
-            --text: #212529;
-            --muted: #6c757d;
-            --radius: 12px;
-            --shadow: 0 4px 12px rgba(0,0,0,0.08);
-            --transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
-            --max-width: 1400px;
-        }
-        /* ===== إعادة ضبط أساسية ===== */
-        *, *::before, *::after { box-sizing: border-box; margin:0; padding:0; }
-        html { font-size:16px; scroll-behavior:smooth; }
-        body {
-            font-family:'Cairo',sans-serif;
-            background-color:var(--bg);
-            color:var(--text);
-            line-height:1.7;
-        }
-        a{text-decoration:none;color:inherit;}
-        img{max-width:100%;height:auto;display:block;border-radius:var(--radius);}
-        button,input,select{font-family:inherit;cursor:pointer;border:none;}
-        /* ===== ترويسة ===== */
-        header{
-            background:var(--primary);
-            color:#fff;
-            padding:1.5rem 1rem;
-            display:flex;
-            justify-content:space-between;
-            align-items:center;
-            flex-wrap:wrap;
-            position:relative;
-        }
-        header .logo{
-            display:flex;
-            align-items:center;
-            gap:.5rem;
-        }
-        header .logo h1{font-size:1.8rem;font-weight:700;margin:0;}
-        header .logo p{font-size:.9rem;opacity:.9;margin:0;}
-        header nav{
-            display:flex;
-            gap:.8rem;
-            flex-wrap:wrap;
-        }
-        header nav a{
-            color:#fff;
-            font-weight:600;
-            padding:.4rem .9rem;
-            border-radius:50px;
-            background:rgba(255,255,255,0.15);
-            transition:var(--transition);
-        }
-        header nav a:hover{background:rgba(255,255,255,0.25);transform:translateY(-2px);}
-        /* ===== قسم البطل ===== */
-        #hero{
-            background:linear-gradient(135deg,rgba(46,125,50,.9),rgba(245,166,35,.9)),
-                        url('https://via.placeholder.com/1600x900/2e7d32/f5a623?text=Healthy+Hero') center/cover no-repeat;
-            color:#fff;text-align:center;padding:8rem 1rem 6rem;position:relative;
-        }
-        #hero::after{
-            content:"";
-            position:absolute;
-            inset:0;
-            background:radial-gradient(circle at center,transparent 0%,rgba(0,0,0,.3)70%);
-        }
-        #hero>*{position:relative;z-index:1;}
-        #hero h2{font-size:2.8rem;margin-bottom:1.2rem;font-weight:700;}
-        #hero p{font-size:1.3rem;max-width:800px;margin:0 auto 2rem;line-height:1.8;}
-        /* ===== أقسام المحتوى ===== */
-        section{padding:3rem 1rem;max-width:var(--max-width);margin:auto;}
-        h2{
-            font-size:2rem;
-            color:var(--primary);
-            margin-bottom:2rem;
-            display:flex;
-            align-items:center;
-            gap:.8rem;
-            position:relative;
-        }
-        h2::before{
-            content:"";
-            width:5px;height:100%;
-            background:var(--secondary);
-            border-radius:2px;
-        }
-        /* ===== أزرار الفلاتر (الأقسام) ===== */
-        .filter-bar{
-            display:flex;
-            gap:.5rem;
-            flex-wrap:wrap;
-            justify-content:center;
-            margin-bottom:2rem;
-        }
-        .filter-bar button{
-            background:#f8f9fa;
-            border:2px solid var(--primary);
-            color:var(--primary);
-            padding:.5rem 1rem;
-            border-radius:50px;
-            font-weight:600;
-            cursor:pointer;
-            transition:var(--transition);
-        }
-        .filter-bar button.active,
-        .filter-bar button:hover{
-            background:var(--primary);
-            color:#fff;
-        }
-        /* ===== شبكة الأصناف ===== */
-        .items-grid{
-            display:grid;
-            gap:1.8rem;
-            grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-        }
-        .item-card{
-            background:var(--card);
-            border-radius:var(--radius);
-            box-shadow:var(--shadow);
-            overflow:hidden;
-            transition:var(--transition);
-            border:1px solid rgba(0,0,0,0.04);
-            cursor:pointer;
-        }
-        .item-card:hover{
-            transform:translateY(-6px);
-            box-shadow:0 8px 20px rgba(0,0,0,.12);
-            border-color:var(--primary);
-        }
-        .item-card img{
-            height:180px;
-            object-fit:cover;
-            border-bottom:1px solid rgba(0,0,0,0.07);
-            transition:transform var(--transition);
-        }
-        .item-card:hover img{transform:scale(1.03);}
-        .item-card .content{
-            padding:1.3rem;
-            display:flex;
-            flex-direction:column;
-        }
-        .item-card h3{
-            margin:0 0 .5rem;
-            font-size:1.3rem;
-            color:var(--primary);
-            display:flex;
-            align-items:center;
-            gap:.4rem;
-        }
-        .item-card h3::before{content:"🍽️";font-size:1.2rem;}
-        .item-card p{
-            margin:.4rem 0;
-            flex-grow:1;
-            font-size:.95rem;
-            color:var(--muted);
-            line-height:1.6;
-        }
-        .item-card .price{
-            font-weight:700;
-            font-size:1.15rem;
-            margin-top:1rem;
-            color:var(--secondary);
-            display:flex;
-            align-items:baseline;
-            gap:.3rem;
-        }
-        .item-card .price::before{content:"SAR";font-size:.9rem;opacity:.8;}
-        /* ===== تذييل ===== */
-        footer{
-            text-align:center;
-            padding:2rem 1rem;
-            background:var(--primary);
-            color:#fff;
-            font-size:.9rem;
-        }
-        footer small{display:block;margin-top:.8rem;opacity:.85;}
-        /* ===== استجابة ===== */
-        @media(max-width:768px){
-            header{flex-direction:column;align-items:flex-start;gap:1rem;}
-            header .logo{font-size:1.6rem;}
-            header nav{justify-content:flex-start;width:100%;}
-            #hero{padding:6rem 1rem 4rem;}
-            #hero h2{font-size:2.4rem;}
-            section{padding:2.5rem .8rem;}
-            h2{font-size:1.7rem;}
-            .filter-bar{flex-direction:column;align-items:stretch;}
-            .filter-bar button{width:100%;margin:.2rem 0;}
-        }
-        @media(max-width:480px){
-            nav{flex-direction:column;gap:.5rem;width:100%;}
-            nav a{width:100%;text-align:center;padding:.8rem;}
-        }
-    </style>
-</head>
-<body>
-    <!-- ===== ترويسة ===== -->
-    <header>
-        <div class="logo">
-            <h1>دايت سنتر</h1>
-            <p>صحتك، هدفنا</p>
-        </div>
-        <nav>
-            <a href="#hero">الرئيسية</a>
-            <a href="#items">الأصناف</a>
-        </nav>
-    </header>
+// ====================== Cargo.toml (Dependencies) ======================
+// [package]
+// name = "healthy_restaurant_sa"
+// version = "0.1.0"
+// edition = "2021"
+//
+// [dependencies]
+// rocket = { version = "0.5.0-rc.2", features = ["json"] }
+// rocket_dyn_templates = { version = "0.2.0", features = ["handlebars"] }
+// serde = { version = "1.0", features = ["derive"] }
+// =======================================================================
 
-    <!-- ===== قسم البطل ===== -->
-    <section id="hero">
-        <h2>صحتك، أولويتنا</h2>
-        <p>استكشف تشكيلة واسعة من الأصناف الغذائية الصحية والمُعدّة بعناية.</p>
-    </section>
+#[macro_use] extern crate rocket;
 
-    <!-- ===== فلاتر الأقسام ===== -->
-    <section id="filters">
-        <div class="filter-bar">
-            <button class="active" data-category="all">الكل</button>
-            <button data-category="breakfast">إفطار</button>
-            <button data-category="lunch">غداء</button>
-            <button data-category="dinner">عشاء</button>
-            <button data-category="snack">سناكات</button>
-            <button data-category="dessert">حلويات</button>
-        </div>
-    </section>
+use rocket::fs::FileServer;
+use rocket::response::content::RawHtml;
 
-    <!-- ===== قسم الأصناف ===== -->
-    <section id="items">
-        <h2>أصنافنا المتنوعة</h2>
-        <div class="items-grid" id="itemsContainer"></div>
-    </section>
+// -------- نماذج البيانات (للمثال فقط، لا نستخدم سيريلايز هنا) --------
+#[derive(Debug)]
+struct MenuItem {
+    name: &'static str,
+    description: &'static str,
+    price: f32,
+    image: &'static str,
+}
 
-    <footer>
-        <p>&copy; 2026 دايت سنتر – جميع الحقوق محفوظة</p>
-        <small>تنويه: المعلومات المقدمة هي للإرشاد العام ولا تغني عن استشارة أخصائي تغذية أو طبيب.</small>
-    </footer>
+// -------- المسارات التي ترجع HTML خام --------
+#[get("/")]
+fn index() -> RawHtml<String> {
+    let html = r#"
+        <!DOCTYPE html>
+        <html lang="ar" dir="rtl">
+        <head>
+            <meta charset="UTF-8">
+            <title>مطبخ الصحة - الرئيسية</title>
+            <style>
+                body{font-family:Arial,sans-serif;margin:0;padding:0;background:#f9f9f9;color:#333;}
+                header{background:#2e7d32;color:#fff;padding:1rem;text-align:center;}
+                nav a{color:#fff;margin:0 1rem;text-decoration:none;}
+                nav a:hover{text-decoration:underline;}
+                .hero{padding:2rem;text-align:center;background:#e8f5e9;}
+                .btn{display:inline-block;padding:0.5rem 1rem;background:#2e7d32;color:#fff;text-decoration:none;border-radius:4px;}
+                footer{text-align:center;padding:1rem;margin-top:2rem;font-size:0.9rem;color:#555;}
+            </style>
+        </head>
+        <body>
+            <header>
+                <h1>مطبخ الصحة</h1>
+                <nav>
+                    <a href="/">الرئيسية</a> |
+                    <a href="/menu">القائمة</a> |
+                    <a href="/about">من نحن</a> |
+                    <a href="/contact">اتصل بنا</a>
+                </nav>
+            </header>
 
-    <!-- ===== جافا سكريبت مدمج ===== -->
-    <script>
-        /* ====== بيانات الأصناف مع تصنيف ====== */
-        const items = [
-            // إفطار
-            {title: 'وجبة إفطار خفيفة', price: 12, desc: 'بيض مسلوق + خضروات + شريحة توست أسمر + ثمرة فاكهة', img: 'https://images.unsplash.com/photo-1582722662480-41f3abb39b53?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDF8fGJyZWFkZmFzdHxlbnwwfHx8fDE2NTkzNzYzNDQ&ixlib=rb-4.0.3&q=80&w=400', category: 'breakfast'},
-            {title: 'وجبة إفطار للطاقة', price: 14, desc: 'شوفان كامل + موز + زبدة فول سوداني طبيعي + حليب كامل + مكسرات', img: 'https://images.unsplash.com/photo-1550583724-b2692b85b150?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDF8fGJyZWFzdCUyMGJyZWFrZmFzdHxlbnwwfHx8fDE2NTkzNzYzNTM&ixlib=rb-4.0.3&q=80&w=400', category: 'breakfast'},
-            {title: 'زبادي يوناني مع عسل', price: 8, desc: 'زبادي يوناني سميك مع قطره عسل طبيعي', img: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDF8fGhlYWx0aHx8fHx8fHx8MTY1OTM3NjMwOA&ixlib=rb-4.0.3&q=80&w=400', category: 'breakfast'},
-            // غداء
-            {title: 'وجبة غداء متوازنة', price: 18, desc: 'صدور دجاج مشوية + أرز بني + سلطة فوشول مع ليمون وزيت زيتون', img: 'https://images.unsplash.com/photo-1546069901-296d410bde3e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDF8fGx1bmNoJTIwd2l0aCUyMGFycmlvfGVufDB8fHx8MTY1OTM3NjM0NQ&ixlib=rb-4.0.3&q=80&w=400', category: 'lunch'},
-            {title: 'وجبة غداء للطاقة', price: 22, desc: 'لحم بقر مشوي + بطاطا حلوة مشوية + بروكلي + سلاطة', img: 'https://images.unsplash.com/photo-1586190848861-99aa4a171e90?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDF8fGJyZWlzJTIwbWVhdCUyMHdpdGglMjBiZWVkJTIwZnJpZWRlfGVufDB8fHx8MTY1OTM3NzE0OA&ixlib=rb-4.0.3&q=80&w=400', category: 'lunch'},
-            {title: 'طاجن دجاج بالزعفران', price: 25, desc: 'دجاج مشوي مع زعفران، أرباح، وجوز هند', img: 'https://images.unsplash.com/photo-1590455531343-0d8e4b2b2c8a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDF8fGhlYWx0aHx8fHx8fHx8MTY1OTM3NjMwOA&ixlib=rb-4.0.3&q=80&w=400', category: 'lunch'},
-            // عشاء
-            {title: 'وجبة عشاء خفيف', price: 15, desc: 'سمك السلمون المشوي + بخار خضروات + سلطة خضراء', img: 'https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDF8fHNlbW9uJTIwZmlzaHxlbnwwfHx8fDE2NTkzNzYzNDg&ixlib=rb-4.0.3&q=80&w=400', category: 'dinner'},
-            {title: 'وجبة عشاء للطاقة', price: 16, desc: 'دجاج التندوري + أرز بشعير + عدس أحمر + سلطة', img: 'https://images.unsplash.com/photo-1600891964599-461b1d316f0c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8fHRpYWtlJTIwYW5kJTIwYXJheiUyMkRyYWlzfGVufDB8fHx8MTY1OTM3NzE1OA&ixlib=rb-4.0.3&q=80&w=400', category: 'dinner'},
-            {title: 'كبة لحم بالباذنجان', price: 22, desc: 'كبة لحم محشية بالباذنجان المشوي والبهارات', img: 'https://images.unsplash.com/photo-1586190848861-99aa4a171e90?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDF8fGJyZWlzJTIwbWVhdCUyMHdpdGglMjBiZWVkJTIwZnJpZWRlfGVufDB8fHx8MTY1OTM3NzE0OA&ixlib=rb-4.0.3&q=80&w=400', category: 'dinner'},
-            // سناكات
-            {title: 'سلطة اليونان', price: 10, desc: 'خيار، طماطم، بصل أحمر، زيتون أسود، جبنة فيتا، زيت زيتون', img: 'https://images.unsplash.com/photo-1550907576-3b4449efef7a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDF8fGhlYWx0aHx8fHx8fHx8MTY1OTM3NjMwNQ&ixlib=rb-4.0.3&q=80&w=400', category: 'snack'},
-            {title: 'وعاء حمص بالطحينة', price: 11, desc: 'حمص منزلي مع طحينة، عصير ليمون، ثوم، وزيت زيتون', img: 'https://images.unsplash.com/photo-1567620905732-2d1ec7ab744e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDF8fCBoYWxzaGF9fHx8fHx8MTY1OTM3NjMxOA&ixlib=rb-4.0.3&q=80&w=400', category: 'snack'},
-            {title: 'مكسرات مشوية مالحة', price: 10, desc: 'لوز، كاجو، وفستق مشوية مع قليل من الملح', img: 'https://images.unsplash.com/photo-1586190848861-99aa4a171e90?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDF8fGJyZWlzJTIwbWVhdCUyMHdpdGglMjBiZWVkJTIwZnJpZWRlfGVufDB8fHx8MTY1OTM3NzE0OA&ixlib=rb-4.0.3&q=80&w=400', category: 'snack'},
-            {title: 'فواكه مقطعة مجاناً', price: 0, desc: 'تشكيلة فواكه موسمية (تفاح، موز، عنب)', img: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDF8fGhlYWx0aHx8fHx8fHx8MTY1OTM3NjMxOA&ixlib=rb-4.0.3&q=80&w=400', category: 'snack'},
-            // حلويات
-            {title: 'شوربة عدس حمراء', price: 9, desc: 'عدس أحمر مطهو مع جزر وكرفس وتوابل خفيفة', img: 'https://images.unsplash.com/photo-1567620905732-2d1ec7ab744e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDF8fCBoYWxzaGF9fHx8fHx8MTY1OTM3NjMxOA&ixlib=rb-4.0.3&q=80&w=400', category: 'dessert'},
-            {title: 'شريحة لحم مشوي', price: 20, desc: 'لحم بقر مشوي مع توابل عربية، جانب من الخضار المشوي', img: 'https://images.unsplash.com/photo-1586190848861-99aa4a171e90?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDF8fGJyZWlzJTIwbWVhdCUyMHdpdGglMjBiZWVkJTIwZnJpZWRlfGVufDB8fHx8MTY1OTM3NzE0OA&ixlib=rb-4.0.3&q=80&w=400', category: 'dessert'}
-        ];
+            <main>
+                <section class="hero">
+                    <h2>مرحباً بكم في مطبخ الصحة - حيث يلتقي الطعم الفاخر بالقيم الغذائية</h2>
+                    <p>استكشف قائمةنا المتنوعة التي تجمع بين الصحة والنكهة في كل طبق.</p>
+                    <a href="/menu" class="btn">عرض القائمة</a>
+                </section>
+            </main>
 
-        document.addEventListener('DOMContentLoaded', () => {
-            const itemsContainer = document.getElementById('itemsContainer');
-            const filterButtons = document.querySelectorAll('.filter-bar button');
+            <footer>
+                <p>©️ 2026 مطبخ الصحة - جميع الحقوق محفوظة</p>
+            </footer>
+        </body>
+        </html>
+    "#;
+    RawHtml(html.to_string())
+}
 
-            // render all items initially
-            function renderItems(filter = 'all') {
-                itemsContainer.innerHTML = '';
-                const filtered = filter === 'all' ? items : items.filter(i => i.category === filter);
-                filtered.forEach(it => {
-                    const card = document.createElement('div');
-                    card.className = 'item-card';
-                    card.innerHTML = `
-                        <img src="${it.img}" alt="${it.title}">
-                        <div class="content">
-                            <h3>${it.title}</h3>
-                            <p>${it.desc}</p>
-                            <p class="price">${it.price} SAR</p>
-                        </div>
-                    `;
-                    itemsContainer.appendChild(card);
-                });
-            }
+#[get("/menu")]
+fn menu() -> RawHtml<String> {
+    let items = vec![
+        MenuItem {
+            name: "سلطة الكينوا مع الأفوكادو",
+            description: "كينوا حمراء، أفوكادو، cherry tomatoes، خيار، عصير ليمون وزيت زيتون",
+            price: 35.0,
+            image: "/images/quinoa-salad.jpg",
+        },
+        MenuItem {
+            name: "سمك السلمون المشوي",
+            description: "سلمون نرويجي مشوي مع خضار مشوية وبطاطا حلوة",
+            price: 65.0,
+            image: "/images/grilled-salmon.jpg",
+        },
+        MenuItem {
+            name: "حساء العدس الأحمر",
+            description: "عدس أحمر مطهو ببطء مع جزر، كرفس، وبصل، وتوابل شرق أوسطية",
+            price: 25.0,
+            image: "/images/lentil-soup.jpg",
+        },
+    ];
 
-            // filter handling
-            filterButtons.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    filterButtons.forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
-                    renderItems(btn.dataset.category);
-                });
-            });
+    let mut items_html = String::new();
+    for item in &items {
+        items_html.push_str(&format!(
+            r#"
+            <div class="menu-item">
+                <img src="{}" alt="{}" style="width:100%;max-width:200px;border-radius:8px;">
+                <h3>{}</h3>
+                <p class="description">{}</p>
+                <p class="price">{:.1} SAR</p>
+            </div>
+            "#,
+            item.image, item.name, item.name, item.description, item.price
+        ));
+    }
 
-            // initial render
-            renderItems();
-        });
-    </script>
-</body>
-</html>
+    let html = format!(r#"
+        <!DOCTYPE html>
+        <html lang="ar" dir="rtl">
+        <head>
+            <meta charset="UTF-8">
+            <title>القائمة - مطبخ الصحة</title>
+            <style>
+                body{{font-family:Arial,sans-serif;margin:0;padding:0;background:#f9f9f9;color:#333;}}
+                header{{background:#2e7d32;color:#fff;padding:1rem;text-align:center;}}
+                nav a{{color:#fff;margin:0 1rem;text-decoration:none;}}
+                nav a:hover{{text-decoration:underline;}}
+                .menu-grid{{display:flex;flex-wrap:wrap;justify-content:center;gap:1.5rem;padding:2rem;}}
+                .menu-item{{background:#fff;border-radius:8px;box-shadow:0 2px 5px rgba(0,0,0,0.1);width:260px;text-align:center;overflow:hidden;}}
+                .menu-item img{{width:100%;height:auto;display:block;}}
+                .menu-item h3{{margin:0.5rem 0;font-size:1.2rem;color:#2e7d32;}}
+                .menu-item .description{{font-size:0.9rem;color:#555;margin:0 0.5rem;}}
+                .menu-item .price{{font-weight:bold;color:#2e7d32;margin:0.5rem 0;}}
+                footer{{text-align:center;padding:1rem;margin-top:2rem;font-size:0.9rem;color:#555;}}
+            </style>
+        </head>
+        <body>
+            <header>
+                <h1>قائمة الطعام</h1>
+                <nav>
+                    <a href="/">الرئيسية</a> |
+                    <a href="/menu">القائمة</a> |
+                    <a href="/about">من نحن</a> |
+                    <a href="/contact">اتصل بنا</a>
+                </nav>
+            </header>
+
+            <main>
+                <section class="menu-grid">
+                    {items_html}
+                </section>
+            </main>
+
+            <footer>
+                <p>©️ 2026 مطبخ الصحة - جميع الحقوق محفوظة</p>
+            </footer>
+        </body>
+        </html>
+    "#);
+
+    RawHtml(html)
+}
+
+#[get("/about")]
+fn about() -> RawHtml<String> {
+    let html = r#"
+        <!DOCTYPE html>
+        <html lang="ar" dir="rtl">
+        <head>
+            <meta charset="UTF-8">
+            <title>من نحن - مطبخ الصحة</title>
+            <style>
+                body{font-family:Arial,sans-serif;margin:0;padding:0;background:#f9f9f9;color:#333;}
+                header{background:#2e7d32;color:#fff;padding:1rem;text-align:center;}
+                nav a{color:#fff;margin:0 1rem;text-decoration:none;}
+                nav a:hover{text-decoration:underline;}
+                .about-content{max-width:800px;margin:2rem auto;padding:0 1rem;line-height:1.6;}
+                .about-content h2{color:#2e7d32;border-bottom:2px solid #e8f5e9;padding-bottom:0.3rem;}
+                footer{text-align:center;padding:1rem;margin-top:2rem;font-size:0.9rem;color:#555;}
+            </style>
+        </head>
+        <body>
+            <header>
+                <h1>من نحن</h1>
+                <nav>
+                    <a href="/">الرئيسية</a> |
+                    <a href="/menu">القائمة</a> |
+                    <a href="/about">من نحن</a> |
+                    <a href="/contact">اتصل بنا</a>
+                </nav>
+            </header>
+
+            <main>
+                <section class="about-content">
+                    <h2>قصة مطبخ الصحة</h2>
+                    <p>مطبخ الصحة تأسس عام 2023 بهدف تقديم أطباق صحية مستوحاة من المطبخ السعودي والعالمي باستخدام مكونات عضوية ومحلية.</p>
+                    <p>نؤمن أن الطعام الجيد يجب أن يغذي الجسم والعقل معًا. لذلك نختار كلingredient بعناية، ونعد كل طبق بشغف واهتمام لتقديم تجربة طعام لا تُنسى.</p>
+                </section>
+            </main>
+
+            <footer>
+                <p>©️ 2026 مطبخ الصحة - جميع الحقوق محفوظة</p>
+            </footer>
+        </body>
+        </html>
+    "#;
+    RawHtml(html.to_string())
+}
+
+#[get("/contact")]
+fn contact() -> RawHtml<String> {
+    let html = r#"
+        <!DOCTYPE html>
+        <html lang="ar" dir="rtl">
+        <head>
+            <meta charset="UTF-8">
+            <title>اتصل بنا - مطبخ الصحة</title>
+            <style>
+                body{font-family:Arial,sans-serif;margin:0;padding:0;background:#f9f9f9;color:#333;}
+                header{background:#2e7d32;color:#fff;padding:1rem;text-align:center;}
+                nav a{color:#fff;margin:0 1rem;text-decoration:none;}
+                nav a:hover{text-decoration:underline;}
+                .contact-info{max-width:600px;margin:2rem auto;padding:0 1rem;line-height:1.6;}
+                .contact-info h2{color:#2e7d32;border-bottom:2px solid #e8f5e9;padding-bottom:0.3rem;}
+                .contact-info ul{list-style:none;padding:0;}
+                .contact-info li{margin:0.5rem 0;font-size:1rem;}
+                footer{text-align:center;padding:1rem;margin-top:2rem;font-size:0.9rem;color:#555;}
+            </style>
+        </head>
+        <body>
+            <header>
+                <h1>اتصل بنا</h1>
+                <nav>
+                    <a href="/">الرئيسية</a> |
+                    <a href="/menu">القائمة</a> |
+                    <a href="/about">من نحن</a> |
+                    <a href="/contact">اتصل بنا</a>
+                </nav>
+            </header>
+
+            <main>
+                <section class="contact-info">
+                    <h2>طرق التواصل معنا</h2>
+                    <p>نتطلع لسماع ملاحظاتكم واقتراحاتكم! يمكنكم التواصل معنا عبر الهاتف أو البريد الإلكتروني أو زيارة فرعنا في الرياض.</p>
+                    <ul>
+                        <li>📞 الهاتف: 011 123 4567</li>
+                        <li>✉️ البريد الإلكتروني: info@healthykitchen.sa</li>
+                        <li>📍 العنوان: طريق الملك فهد، الرياض، المملكة العربية السعودية</li>
+                        <li>🕒 ساعات العمل: السبت - الخميس: 8:00 ص - 10:00 م</li>
+                    </ul>
+                </section>
+            </main>
+
+            <footer>
+                <p>©️ 2026 مطبخ الصحة - جميع الحقوق محفوظة</p>
+            </footer>
+        </body>
+        </html>
+    "#;
+    RawHtml(html.to_string())
+}
+
+#[launch]
+fn rocket() -> _ {
+    rocket::build()
+        .mount("/", routes![index, menu, about, contact])
+        .mount("/public", FileServer::from("static"))
+        .mount("/images", FileServer::from("static/images"))
+}
