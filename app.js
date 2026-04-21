@@ -3,318 +3,152 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fit Fuel Pro | لوحة تحكم المتدرب</title>
+    <title>Fit Fuel Elite | نظام المشتركين</title>
     <style>
         :root {
-            --primary-red: #e63946;    /* لون التمارين */
-            --primary-green: #4caf50;  /* لون التغذية */
-            --bg-dark: #121212;
-            --card-bg: #1e1e1e;
-            --text-white: #ffffff;
-            --text-gray: #a0a0a0;
-            --accent-blue: #2196f3;
+            --main-gold: #d4af37; /* لون ذهبي للنخبة */
+            --dark-bg: #0a0a0a;
+            --card-bg: #161616;
+            --text-color: #e0e0e0;
         }
 
         body {
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg-dark);
-            color: var(--text-white);
+            font-family: 'Tahoma', sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text-color);
             margin: 0;
-            padding: 0;
-            line-height: 1.6;
+            padding-bottom: 80px;
         }
 
-        /* الهيدر */
-        .header {
-            background-color: var(--card-bg);
+        .app-header {
+            background: linear-gradient(145deg, #1a1a1a, #000);
+            padding: 30px 20px;
             text-align: center;
-            padding: 25px 20px;
-            border-bottom: 3px solid var(--primary-red);
-            position: sticky;
-            top: 0;
-            z-index: 100;
+            border-bottom: 2px solid var(--main-gold);
         }
 
-        .header h1 {
-            margin: 0;
-            font-size: 1.5rem;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
+        .container { padding: 15px; max-width: 500px; margin: auto; }
 
-        .welcome-msg {
-            color: var(--text-gray);
-            font-size: 0.9rem;
-            margin-top: 5px;
-        }
-
-        /* حاوي المحتوى */
-        .container {
-            padding: 20px;
-            max-width: 600px;
-            margin: 0 auto;
-            padding-bottom: 100px; /* مساحة للفوتر */
-        }
-
-        /* بطاقات الحالة */
-        .status-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-bottom: 25px;
-        }
-
-        .status-card {
-            background-color: var(--card-bg);
-            padding: 15px;
+        .section-card {
+            background: var(--card-bg);
             border-radius: 12px;
-            text-align: center;
-            border-top: 2px solid var(--accent-blue);
-        }
-
-        .status-card small {
-            color: var(--text-gray);
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        .status-card span {
-            font-size: 1.2rem;
-            font-weight: bold;
-        }
-
-        /* الأقسام الرئيسية */
-        .section-box {
-            background-color: var(--card-bg);
-            border-radius: 15px;
             padding: 20px;
-            margin-bottom: 25px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            margin-bottom: 20px;
+            border: 1px solid #222;
         }
 
-        .section-title {
-            display: flex;
-            align-items: center;
+        .title {
+            color: var(--main-gold);
             font-size: 1.2rem;
-            margin-bottom: 20px;
-            border-right: 4px solid var(--primary-red);
-            padding-right: 10px;
-        }
-
-        .nutrition-title {
-            border-right-color: var(--primary-green);
-        }
-
-        /* قائمة العناصر (تمارين أو وجبات) */
-        .item-row {
+            margin-bottom: 15px;
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            padding: 15px 0;
-            border-bottom: 1px solid #333;
-        }
-
-        .item-row:last-child {
-            border-bottom: none;
-        }
-
-        .item-info h4 {
-            margin: 0;
-            font-size: 1.05rem;
-            color: #eee;
-        }
-
-        .item-info p {
-            margin: 5px 0 0 0;
-            font-size: 0.85rem;
-            color: var(--text-gray);
-        }
-
-        /* أزرار الفعل */
-        .action-btn {
-            background-color: var(--primary-red);
-            color: white;
-            border: none;
-            padding: 7px 12px;
-            border-radius: 6px;
-            text-decoration: none;
-            font-size: 0.75rem;
-            font-weight: bold;
-            transition: 0.3s;
-        }
-
-        .action-btn:active {
-            transform: scale(0.95);
-        }
-
-        /* بار الماكروز */
-        .macros-bar {
-            display: flex;
             gap: 10px;
-            margin-bottom: 20px;
         }
 
-        .macro-item {
-            flex: 1;
-            background: #252525;
-            padding: 10px;
-            border-radius: 8px;
-            text-align: center;
+        .data-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #222;
         }
 
-        .macro-item span {
-            display: block;
-            font-weight: bold;
-            font-size: 1.1rem;
+        .btn-check {
+            background: none;
+            border: 1px solid var(--main-gold);
+            color: var(--main-gold);
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
         }
 
-        .macro-label {
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            margin-bottom: 3px;
+        .btn-check.done {
+            background: var(--main-gold);
+            color: black;
         }
 
-        /* التنقل السفلي */
-        .bottom-nav {
+        /* Bottom Nav */
+        .nav-bar {
             position: fixed;
             bottom: 0;
-            left: 0;
             width: 100%;
-            background-color: #000;
+            background: #000;
             display: flex;
             justify-content: space-around;
-            padding: 12px 0;
-            border-top: 1px solid #222;
+            padding: 15px 0;
+            border-top: 1px solid var(--main-gold);
         }
-
-        .nav-link {
-            color: var(--text-gray);
-            text-decoration: none;
-            font-size: 0.75rem;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-
-        .nav-link.active {
-            color: var(--primary-red);
-        }
-
-        .nav-icon {
-            font-size: 1.2rem;
-        }
-
     </style>
 </head>
 <body>
 
-    <div class="header">
-        <h1>FIT FUEL PRO</h1>
-        <div class="welcome-msg">مرحباً بالكابتن: محمد علي ⚡</div>
+<div class="app-header">
+    <h2 id="clientName">جاري التحميل...</h2>
+    <p id="clientGoal" style="color: #888;"></p>
+</div>
+
+<div class="container">
+    <div class="section-card">
+        <div class="title">🏋️ تمارين اليوم</div>
+        <div id="workoutList"></div>
     </div>
 
-    <div class="container">
-        
-        <div class="status-grid">
-            <div class="status-card">
-                <small>الوزن المستهدف</small>
-                <span>80.0 كجم</span>
-            </div>
-            <div class="status-card">
-                <small>السعرات اليومية</small>
-                <span>2800 kcal</span>
-            </div>
-        </div>
-
-        <div class="section-box">
-            <div class="section-title">تمرين اليوم: سحب (PULL)</div>
-            
-            <div class="item-row">
-                <div class="item-info">
-                    <h4>Lat Pulldown</h4>
-                    <p>4 جولات × 12 تكرار (راحة 60ث)</p>
-                </div>
-                <a href="#" class="action-btn">شرح الفيديو</a>
-            </div>
-
-            <div class="item-row">
-                <div class="item-info">
-                    <h4>Barbell Row</h4>
-                    <p>3 جولات × 10 تكرارات</p>
-                </div>
-                <a href="#" class="action-btn">شرح الفيديو</a>
-            </div>
-
-            <div class="item-row">
-                <div class="item-info">
-                    <h4>Hammer Curls</h4>
-                    <p>3 جولات × 15 تكرار</p>
-                </div>
-                <a href="#" class="action-btn" style="background-color: #555;">تم الإنجاز ✓</a>
-            </div>
-        </div>
-
-        <div class="section-box">
-            <div class="section-title nutrition-title">خطة التغذية والماكروز</div>
-            
-            <div class="macros-bar">
-                <div class="macro-item">
-                    <div class="macro-label" style="color: var(--primary-green);">بروتين</div>
-                    <span>180g</span>
-                </div>
-                <div class="macro-item">
-                    <div class="macro-label" style="color: #ffb74d;">كارب</div>
-                    <span>300g</span>
-                </div>
-                <div class="macro-item">
-                    <div class="macro-label" style="color: #64b5f6;">دهون</div>
-                    <span>65g</span>
-                </div>
-            </div>
-
-            <div class="item-row">
-                <div class="item-info">
-                    <h4>الوجبة 1: الفطور</h4>
-                    <p>أومليت 5 بيضات + خبز شوفان + خضار</p>
-                </div>
-            </div>
-
-            <div class="item-row">
-                <div class="item-info">
-                    <h4>الوجبة 2: غداء العمل</h4>
-                    <p>200g سمك فيليه + أرز بني + سلطة</p>
-                </div>
-            </div>
-
-            <div class="item-row">
-                <div class="item-info">
-                    <h4>الوجبة 3: قبل النوم</h4>
-                    <p>جبنة قريش + ملعقة زيت زيتون + خيار</p>
-                </div>
-            </div>
-        </div>
-
+    <div class="section-card">
+        <div class="title">🥗 نظام الوجبات</div>
+        <div id="dietList"></div>
     </div>
+</div>
 
-    <nav class="bottom-nav">
-        <a href="#" class="nav-link active">
-            <span class="nav-icon">🏋️</span>
-            التمارين
-        </a>
-        <a href="#" class="nav-link">
-            <span class="nav-icon">🥗</span>
-            التغذية
-        </a>
-        <a href="#" class="nav-link">
-            <span class="nav-icon">📊</span>
-            القياسات
-        </a>
-        <a href="#" class="nav-link">
-            <span class="nav-icon">💬</span>
-            الدعم
-        </a>
-    </nav>
+<nav class="nav-bar">
+    <span>🏠 الرئيسية</span>
+    <span>📊 تطوري</span>
+    <span>💬 المدرب</span>
+</nav>
+
+<script>
+    // هذه هي قاعدة بيانات المشترك - يمكنك تغييرها بسهولة
+    const clientData = {
+        name: "البطل محمد",
+        goal: "تضخيم عضلي - الأسبوع الرابع",
+        workout: [
+            { name: "بنش برس", sets: "4", reps: "10" },
+            { name: "تجميع دمبل", sets: "3", reps: "12" },
+            { name: "غطس متوازي", sets: "3", reps: "للفشل" }
+        ],
+        diet: [
+            { meal: "فطور", content: "100جم شوفان + 5 بيضات" },
+            { meal: "غداء", content: "200جم صدر دجاج + أرز" },
+            { meal: "عشاء", content: "علبة تونة + سلطة" }
+        ]
+    };
+
+    // عرض البيانات في الصفحة
+    document.getElementById('clientName').innerText = clientData.name;
+    document.getElementById('clientGoal').innerText = clientData.goal;
+
+    const workoutDiv = document.getElementById('workoutList');
+    clientData.workout.forEach(ex => {
+        workoutDiv.innerHTML += `
+            <div class="data-row">
+                <div>
+                    <strong>${ex.name}</strong><br>
+                    <small style="color:#888">${ex.sets} جولات × ${ex.reps}</small>
+                </div>
+                <button class="btn-check" onclick="this.classList.toggle('done')">تم</button>
+            </div>`;
+    });
+
+    const dietDiv = document.getElementById('dietList');
+    clientData.diet.forEach(m => {
+        dietDiv.innerHTML += `
+            <div class="data-row">
+                <div>
+                    <strong>${m.meal}</strong><br>
+                    <small style="color:#888">${m.content}</small>
+                </div>
+            </div>`;
+    });
+</script>
 
 </body>
 </html>
