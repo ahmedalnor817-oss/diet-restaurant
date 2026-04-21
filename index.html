@@ -1,289 +1,61 @@
-// ====================== Cargo.toml (Dependencies) ======================
-// [package]
-// name = "healthy_restaurant_sa"
-// version = "0.1.0"
-// edition = "2021"
-//
-// [dependencies]
-// rocket = { version = "0.5.0-rc.2", features = ["json"] }
-// askama = "0.12"
-// serde = { version = "1.0", features = ["derive"] }
-// =======================================================================
-
-#[macro_use] extern crate rocket;
-
-use askama::Template;
-use rocket::fs::FileServer;
-use rocket::response::content::RawHtml;
-
-// -------- نماذج البيانات --------
-#[derive(Debug, serde::Serialize)]
-struct MenuItem {
-    name: &'static str,
-    description: &'static str,
-    price: f32,
-    image: &'static str,
-}
-
-// -------- القوالب (askama) --------
-#[derive(Template)]
-#[template(source = "
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>مطبخ الصحة - الرئيسية</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مطبخ الصحة - قائمة الطعام</title>
     <style>
-        body{font-family:'Segoe UI',Tahoma,sans-serif;margin:0;background:#f9f9f9;color:#333;}
-        header{background:#2e7d32;color:#fff;padding:1.5rem;text-align:center;}
-        nav a{color:#fff;margin:0 1rem;text-decoration:none;font-weight:500;}
-        nav a:hover{text-decoration:underline;}
-        .hero{max-width:800px;margin:2rem auto;padding:0 1.5rem;text-align:center;}
-        .hero h2{color:#2e7d32;margin-bottom:1rem;}
-        .btn{display:inline-block;padding:0.75rem 1.5rem;background:#2e7d32;color:#fff;text-decoration:none;border-radius:4px;font-weight:600;transition:background .3s;}
-        .btn:hover{background:#1b5e20;}
-        footer{text-align:center;padding:1.5rem;margin-top:2rem;font-size:.9rem;color:#555;border-top:1px solid #eee;}
+        body { font-family: Arial, sans-serif; margin: 0; background-color: #f4f4f4; text-align: center; }
+        
+        /* الهيدر الأخضر مثل الذي في الصورة */
+        .nav-header { background-color: #43763e; color: white; padding: 20px 0; }
+        .nav-links { margin-top: 10px; }
+        .nav-links a { color: white; text-decoration: none; margin: 0 10px; font-size: 14px; }
+
+        .hero-section { background: white; padding: 40px 20px; margin-bottom: 20px; }
+        .btn-view { background-color: #43763e; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; }
+
+        /* كرت الوجبة أو التمرين */
+        .menu-container { display: flex; justify-content: center; padding: 20px; }
+        .item-card { background: white; border: 1px solid #ddd; border-radius: 8px; width: 250px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .item-image { width: 100%; height: 200px; background-color: #eee; display: flex; align-items: center; justify-content: center; color: #999; }
+        .item-details { padding: 15px; }
+        .item-name { color: #43763e; font-weight: bold; margin-bottom: 5px; }
+        .item-desc { font-size: 12px; color: #666; margin-bottom: 10px; }
+        .item-price { font-weight: bold; color: #333; }
+
+        footer { font-size: 12px; color: #888; padding: 20px; }
     </style>
 </head>
 <body>
-    <header>
+
+    <div class="nav-header">
         <h1>مطبخ الصحة</h1>
-        <nav>
-            <a href="/">الرئيسية</a> |
-            <a href="/menu">القائمة</a> |
-            <a href="/about">من نحن</a> |
-            <a href="/contact">اتصل بنا</a>
-        </nav>
-    </header>
+        <div class="nav-links">
+            <a href="#">الرئيسية</a> | <a href="#">القائمة</a> | <a href="#">من نحن</a> | <a href="#">اتصل بنا</a>
+        </div>
+    </div>
 
-    <main>
-        <section class="hero">
-            <h2>{{message}}</h2>
-            <p>استكشف قائمتنا المتنوعة التي تجمع بين الصحة والنكهة في كل طبق.</p>
-            <a href="/menu" class="btn">عرض القائمة</a>
-        </section>
-    </main>
+    <div class="hero-section">
+        <h2>استكشف قائمتنا المتنوعة</h2>
+        <p>التي تجمع بين الصحة والنكهة في كل طبق.</p>
+        <button class="btn-view">عرض القائمة</button>
+    </div>
 
-    <footer>
-        <p>©️ 2026 مطبخ الصحة - جميع الحقوق محفوظة</p>
-    </footer>
-</body>
-</html>
-")]
-struct IndexTemplate {
-    message: &'static str,
-}
-
-#[derive(Template)]
-#[template(source = "
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <title>القائمة - مطبخ الصحة</title>
-    <style>
-        body{font-family:'Segoe UI',Tahoma,sans-serif;margin:0;background:#f9f9f9;color:#333;}
-        header{background:#2e7d32;color:#fff;padding:1.5rem;text-align:center;}
-        nav a{color:#fff;margin:0 1rem;text-decoration:none;font-weight:500;}
-        nav a:hover{text-decoration:underline;}
-        .menu-grid{display:flex;flex-wrap:wrap;justify-content:center;gap:1.5rem;padding:2rem;}
-        .menu-item{background:#fff;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.1);width:280px;text-align:center;overflow:hidden;transition:transform .2s;}
-        .menu-item:hover{transform:translateY(-5px);}
-        .menu-item img{width:100%;height:auto;display:block;}
-        .menu-item h3{margin:.75rem 0;font-size:1.25rem;color:#2e7d32;}
-        .menu-item .description{font-size:.9rem;color:#555;margin:0 .75rem;}
-        .menu-item .price{font-weight:bold;color:#2e7d32;margin:.5rem 0 .75rem;}
-        footer{text-align:center;padding:1.5rem;margin-top:2rem;font-size:.9rem;color:#555;border-top:1px solid #eee;}
-    </style>
-</head>
-<body>
-    <header>
-        <h1>قائمة الطعام</h1>
-        <nav>
-            <a href="/">الرئيسية</a> |
-            <a href="/menu">القائمة</a> |
-            <a href="/about">من نحن</a> |
-            <a href="/contact">اتصل بنا</a>
-        </nav>
-    </header>
-
-    <main>
-        <section class="menu-grid">
-            {% for item in items %}
-                <div class="menu-item">
-                    <img src="{{ item.image }}" alt="{{ item.name }}" class="item-image">
-                    <h3>{{ item.name }}</h3>
-                    <p class="description">{{ item.description }}</p>
-                    <p class="price">{{ item.price }} SAR</p>
-                </div>
-            {% endfor %}
-        </section>
-    </main>
+    <div class="menu-container">
+        <div class="item-card">
+            <div class="item-image">صورة الوجبة</div>
+            <div class="item-details">
+                <div class="item-name">وجبة كمال أجسام (دجاج وأرز)</div>
+                <div class="item-description">صدور دجاج مشوية مع أرز بسمتي وخضار سوتيه</div>
+                <div class="item-price">SAR 45.00</div>
+            </div>
+        </div>
+    </div>
 
     <footer>
-        <p>©️ 2026 مطبخ الصحة - جميع الحقوق محفوظة</p>
+        © 2026 مطبخ الصحة - جميع الحقوق محفوظة
     </footer>
+
 </body>
 </html>
-")]
-struct MenuTemplate {
-    items: Vec<MenuItem>,
-}
-
-#[derive(Template)]
-#[template(source = "
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <title>من نحن - مطبخ الصحة</title>
-    <style>
-        body{font-family:'Segoe UI',Tahoma,sans-serif;margin:0;background:#f9f9f9;color:#333;}
-        header{background:#2e7d32;color:#fff;padding:1.5rem;text-align:center;}
-        nav a{color:#fff;margin:0 1rem;text-decoration:none;font-weight:500;}
-        nav a:hover{text-decoration:underline;}
-        .about-content{max-width:800px;margin:2rem auto;padding:0 1.5rem;line-height:1.6;}
-        .about-content h2{color:#2e7d32;border-bottom:2px solid #e8f5e9;padding-bottom:.3rem;}
-        footer{text-align:center;padding:1.5rem;margin-top:2rem;font-size:.9rem;color:#555;border-top:1px solid #eee;}
-    </style>
-</head>
-<body>
-    <header>
-        <h1>من نحن</h1>
-        <nav>
-            <a href="/">الرئيسية</a> |
-            <a href="/menu">القائمة</a> |
-            <a href="/about">من نحن</a> |
-            <a href="/contact">اتصل بنا</a>
-        </nav>
-    </header>
-
-    <main>
-        <section class="about-content">
-            <h2>قصة مطبخ الصحة</h2>
-            <p>{{message}}</p>
-            <p>نؤمن أن الطعام الجيد يجب أن يغذي الجسم والعقل معًا. لذلك نختار كلingredient بعناية، ونعد كل طبق بشغف واهتمام لتقديم تجربة طعام لا تُنسى.</p>
-        </section>
-    </main>
-
-    <footer>
-        <p>©️ 2026 مطبخ الصحة - جميع الحقوق محفوظة</p>
-    </footer>
-</body>
-</html>
-")]
-struct AboutTemplate {
-    message: &'static str,
-}
-
-#[derive(Template)]
-#[template(source = "
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <title>اتصل بنا - مطبخ الصحة</title>
-    <style>
-        body{font-family:'Segoe UI',Tahoma,sans-serif;margin:0;background:#f9f9f9;color:#333;}
-        header{background:#2e7d32;color:#fff;padding:1.5rem;text-align:center;}
-        nav a{color:#fff;margin:0 1rem;text-decoration:none;font-weight:500;}
-        nav a:hover{text-decoration:underline;}
-        .contact-info{max-width:600px;margin:2rem auto;padding:0 1.5rem;line-height:1.6;}
-        .contact-info h2{color:#2e7d32;border-bottom:2px solid #e8f5e9;padding-bottom:.3rem;}
-        .contact-info ul{list-style:none;padding:0;}
-        .contact-info li{margin:.5rem 0;font-size:1rem;}
-        footer{text-align:center;padding:1.5rem;margin-top:2rem;font-size:.9rem;color:#555;border-top:1px solid #eee;}
-    </style>
-</head>
-<body>
-    <header>
-        <h1>اتصل بنا</h1>
-        <nav>
-            <a href="/">الرئيسية</a> |
-            <a href="/menu">القائمة</a> |
-            <a href="/about">من نحن</a> |
-            <a href="/contact">اتصل بنا</a>
-        </nav>
-    </header>
-
-    <main>
-        <section class="contact-info">
-            <h2>طرق التواصل معنا</h2>
-            <p>{{message}}</p>
-            <ul>
-                <li>📞 الهاتف: 011 123 4567</li>
-                <li>✉️ البريد الإلكتروني: info@healthykitchen.sa</li>
-                <li>📍 العنوان: طريق الملك فهد، الرياض، المملكة العربية السعودية</li>
-                <li>🕒 ساعات العمل: السبت - الخميس: 8:00 ص - 10:00 م</li>
-            </ul>
-        </section>
-    </main>
-
-    <footer>
-        <p>©️ 2026 مطبخ الصحة - جميع الحقوق محفوظة</p>
-    </footer>
-</body>
-</html>
-")]
-struct ContactTemplate {
-    message: &'static str,
-}
-
-// -------- المسارات --------
-#[get("/")]
-fn index() -> RawHtml<String> {
-    let tmpl = IndexTemplate {
-        message: "مرحباً بكم في مطبخ الصحة - حيث يلتقي الطعم الفاخر بالقيم الغذائية",
-    };
-    RawHtml(tmpl.render().unwrap())
-}
-
-#[get("/menu")]
-fn menu() -> RawHtml<String> {
-    let items = vec![
-        MenuItem {
-            name: "سلطة الكينوا مع الأفوكادو",
-            description: "كينوا حمراء، أفوكادو، cherry tomatoes، خيار، عصير ليمون وزيت زيتون",
-            price: 35.0,
-            image: "/static/images/quinoa-salad.jpg",
-        },
-        MenuItem {
-            name: "سمك السلمون المشوي",
-            description: "سلمون نرويجي مشوي مع خضار مشوية وبطاطا حلوة",
-            price: 65.0,
-            image: "/static/images/grilled-salmon.jpg",
-        },
-        MenuItem {
-            name: "حساء العدس الأحمر",
-            description: "عدس أحمر مطهو ببطء مع جزر، كرفس، وبصل، وتوابل شرق أوسطية",
-            price: 25.0,
-            image: "/static/images/lentil-soup.jpg",
-        },
-    ];
-
-    let tmpl = MenuTemplate { items };
-    RawHtml(tmpl.render().unwrap())
-}
-
-#[get("/about")]
-fn about() -> RawHtml<String> {
-    let tmpl = AboutTemplate {
-        message: "مطبخ الصحة تأسس عام 2023 بهدف تقديم أطباق صحية مستوحاة من المطبخ السعودي والعالمي باستخدام مكونات عضوية ومحلية.",
-    };
-    RawHtml(tmpl.render().unwrap())
-}
-
-#[get("/contact")]
-fn contact() -> RawHtml<String> {
-    let tmpl = ContactTemplate {
-        message: "نتطلع لسماع ملاحظاتكم واقتراحاتكم! يمكنكم التواصل معنا عبر الهاتف أو البريد الإلكتروني أو زيارة فرعنا في الرياض.",
-    };
-    RawHtml(tmpl.render().unwrap())
-}
-
-#[launch]
-fn rocket() -> _ {
-    rocket::build()
-        .mount("/", routes![index, menu, about, contact])
-        .mount("/static", FileServer::from("static"))
-}
